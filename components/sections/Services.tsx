@@ -70,7 +70,7 @@ export default function Services() {
           <div className="max-w-4xl mx-auto mb-6">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">Backed by the best</h3>
             <p className="text-base text-gray-600 leading-relaxed mb-4">
-              9G Speednet is powered by both major networks. Meaning that when you're with us, 
+              9G Speednet is powered by all major networks. Meaning that when you're with us, 
               you're backed by the best networks in South Africa. Enjoy massive coverage, 
               a robust infrastructure and technical expertise when you go 9G Speednet.
             </p>
