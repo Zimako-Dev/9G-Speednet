@@ -1,58 +1,57 @@
 'use client';
 
 import { useState } from 'react';
-import { Check, Wifi, Zap, Crown } from 'lucide-react';
+import { Check, Wifi, Zap, Crown, Radio, Satellite } from 'lucide-react';
 
 const plans = [
   {
-    name: "Basic",
-    price: 29,
-    speed: "100 Mbps",
-    icon: Wifi,
+    name: "Fixed LTE",
+    price: "Starting from R299",
+    speed: "Up to 100 Mbps",
+    icon: Radio,
     popular: false,
     features: [
-      "100 Mbps Download Speed",
-      "50 Mbps Upload Speed",
-      "Basic Router Included",
+      "Reliable 4G/LTE Connection",
+      "No Data Caps on Selected Plans",
+      "Quick Installation",
       "24/7 Customer Support",
-      "No Data Caps",
-      "1 Month Free Trial"
+      "Backup Power Options",
+      "Perfect for Remote Areas",
+      "Multiple Speed Options"
     ]
   },
   {
-    name: "Pro",
-    price: 49,
-    speed: "500 Mbps",
+    name: "Fibre",
+    price: "Starting from R399",
+    speed: "Up to 1000 Mbps",
     icon: Zap,
     popular: true,
     features: [
-      "500 Mbps Download Speed",
-      "200 Mbps Upload Speed",
-      "Premium Router Included",
+      "Ultra-Fast Fibre Connection",
+      "Unlimited Data",
+      "Symmetrical Upload/Download",
       "Priority Customer Support",
-      "No Data Caps",
-      "2 Months Free Trial",
-      "Free Installation",
-      "WiFi 6 Technology"
+      "Professional Installation",
+      "99.9% Uptime Guarantee",
+      "WiFi 6 Router Included",
+      "Future-Proof Technology"
     ]
   },
   {
-    name: "Ultra",
-    price: 79,
-    speed: "1000+ Mbps",
-    icon: Crown,
+    name: "Microwave",
+    price: "Starting from R599",
+    speed: "Up to 500 Mbps",
+    icon: Satellite,
     popular: false,
     features: [
-      "1000+ Mbps Download Speed",
-      "500 Mbps Upload Speed",
-      "Enterprise Router Included",
-      "VIP Customer Support",
-      "No Data Caps",
-      "3 Months Free Trial",
-      "Free Installation",
-      "WiFi 6E Technology",
-      "Mesh Network Setup",
-      "Static IP Address"
+      "Point-to-Point Connection",
+      "Enterprise Grade Solution",
+      "Low Latency Performance",
+      "Dedicated Support Team",
+      "Custom Installation",
+      "Business SLA Available",
+      "Scalable Bandwidth",
+      "Weather Resistant Technology"
     ]
   }
 ];
@@ -61,27 +60,34 @@ export default function Services() {
   const [hoveredPlan, setHoveredPlan] = useState<number | null>(null);
 
   return (
-    <section id="services" className="py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
+    <section id="services" className="py-16 px-6 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6">
-            Choose Your <span className="text-primary-500">Speed</span>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-5">
+            Our <span className="text-primary-500">Services</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Select the perfect plan for your needs. All plans include unlimited data, 
-            free installation, and our industry-leading customer support.
-          </p>
+          <div className="max-w-4xl mx-auto mb-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Backed by the best</h3>
+            <p className="text-base text-gray-600 leading-relaxed mb-4">
+              9G Speednet is powered by both major networks. Meaning that when you're with us, 
+              you're backed by the best networks in South Africa. Enjoy massive coverage, 
+              a robust infrastructure and technical expertise when you go 9G Speednet.
+            </p>
+            <p className="text-base text-primary-600 font-medium">
+              We offer affordable service to everyone and everywhere
+            </p>
+          </div>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {plans.map((plan, index) => {
             const IconComponent = plan.icon;
             return (
               <div
                 key={plan.name}
-                className={`relative bg-white rounded-3xl shadow-xl border transition-all duration-500 hover:scale-105 hover:shadow-2xl ${
+                className={`relative bg-white rounded-2xl shadow-lg border transition-all duration-500 hover:scale-105 hover:shadow-xl ${
                   plan.popular 
                     ? 'border-primary-500 shadow-primary-500/25' 
                     : 'border-gray-200 hover:border-primary-300'
@@ -93,47 +99,57 @@ export default function Services() {
               >
                 {/* Popular Badge */}
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-primary-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-primary-500 text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md">
                       Most Popular
                     </span>
                   </div>
                 )}
 
-                <div className="p-8">
+                <div className="p-6">
                   {/* Plan Header */}
-                  <div className="text-center mb-8">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 ${
+                  <div className="text-center mb-6">
+                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 ${
                       plan.popular ? 'bg-primary-500' : 'bg-gray-100'
                     }`}>
-                      <IconComponent className={`w-8 h-8 ${
+                      <IconComponent className={`w-6 h-6 ${
                         plan.popular ? 'text-white' : 'text-gray-600'
                       }`} />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
                     <div className="flex items-baseline justify-center">
-                      <span className="text-5xl font-bold text-primary-500">R{plan.price}</span>
-                      <span className="text-gray-500 ml-2">/month</span>
+                      <span className="text-2xl font-bold text-primary-500">{plan.price}</span>
                     </div>
-                    <p className="text-lg text-gray-600 mt-2">{plan.speed}</p>
+                    <p className="text-base text-gray-600 mt-2">{plan.speed}</p>
                   </div>
 
                   {/* Features List */}
-                  <ul className="space-y-4 mb-8">
+                  <ul className="space-y-3 mb-6">
                     {plan.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start">
-                        <Check className="w-5 h-5 text-accent-green mr-3 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">{feature}</span>
+                        <Check className="w-4 h-4 text-accent-green mr-2.5 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700 text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
 
                   {/* CTA Button */}
-                  <button className={`w-full py-4 rounded-2xl font-semibold text-lg transition-all duration-300 ${
-                    plan.popular
-                      ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
-                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200 hover:border-primary-300'
-                  }`}>
+                  <button 
+                    className={`w-full py-3 rounded-xl font-semibold text-base transition-all duration-300 ${
+                      plan.popular
+                        ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-md hover:shadow-lg'
+                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200 hover:border-primary-300'
+                    }`}
+                    onClick={() => {
+                      if (plan.name === 'Fixed LTE') {
+                        window.location.href = '/fixed-lte';
+                      } else if (plan.name === 'Fibre') {
+                        window.location.href = '/fibre';
+                      } else if (plan.name === 'Microwave') {
+                        window.location.href = '/microwave';
+                      }
+                    }}
+                  >
                     Get Started
                   </button>
                 </div>
@@ -143,9 +159,12 @@ export default function Services() {
         </div>
 
         {/* Additional Info */}
-        <div className="text-center mt-12">
-          <p className="text-gray-600">
-            All plans include free router, professional installation, and 30-day money-back guarantee.
+        <div className="text-center mt-10">
+          <p className="text-gray-600 mb-3 text-sm">
+            All services include professional installation and 24/7 customer support.
+          </p>
+          <p className="text-xs text-gray-500">
+            Pricing may vary based on location and specific requirements. Contact us for a custom quote.
           </p>
         </div>
       </div>

@@ -53,46 +53,46 @@ export default function Features() {
   }, []);
 
   return (
-    <section id="features" className="py-20 px-6 bg-white">
+    <section id="features" className="py-16 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-5">
             Why Choose <span className="text-primary-500">9G Speednet</span>?
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
             We deliver more than just internet. Experience premium features, 
             unmatched reliability, and exceptional service that sets us apart.
           </p>
         </div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
               <div
                 key={index}
-                className={`group bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:scale-105 ${
+                className={`group bg-white rounded-2xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-500 hover:scale-105 ${
                   visibleFeatures[index] ? 'animate-fade-in' : 'opacity-0'
                 }`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Icon */}
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} p-4 mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <IconComponent className="w-8 h-8 text-white" />
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${feature.color} p-3 mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                  <IconComponent className="w-6 h-6 text-white" />
                 </div>
 
                 {/* Content */}
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-primary-500 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-500 transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-sm">
                   {feature.description}
                 </p>
 
                 {/* Hover Effect */}
-                <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className={`w-full h-1 bg-gradient-to-r ${feature.color} rounded-full`}></div>
                 </div>
               </div>
@@ -101,31 +101,31 @@ export default function Features() {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-20 bg-gradient-to-r from-primary-500 via-accent-purple to-accent-blue rounded-3xl p-12 text-white">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
+        <div className="mt-16 bg-gradient-to-r from-primary-500 via-accent-purple to-accent-blue rounded-2xl p-8 text-white">
+          <div className="grid md:grid-cols-4 gap-6 text-center">
             <div className="group">
-              <div className="text-4xl md:text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-2xl md:text-3xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
                 50K+
               </div>
-              <p className="text-lg text-white/90">Happy Customers</p>
+              <p className="text-base text-white/90">Happy Customers</p>
             </div>
             <div className="group">
-              <div className="text-4xl md:text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-2xl md:text-3xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
                 99.9%
               </div>
-              <p className="text-lg text-white/90">Network Uptime</p>
+              <p className="text-base text-white/90">Network Uptime</p>
             </div>
             <div className="group">
-              <div className="text-4xl md:text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-2xl md:text-3xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
                 24/7
               </div>
-              <p className="text-lg text-white/90">Customer Support</p>
+              <p className="text-base text-white/90">Customer Support</p>
             </div>
             <div className="group">
-              <div className="text-4xl md:text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-2xl md:text-3xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
                 1000+
               </div>
-              <p className="text-lg text-white/90">Mbps Speeds</p>
+              <p className="text-base text-white/90">Mbps Speeds</p>
             </div>
           </div>
         </div>
