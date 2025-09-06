@@ -47,17 +47,17 @@ export default function MicrowaveHero() {
           {/* Left Column - Content */}
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* Service Badge */}
-            <div className="inline-flex items-center bg-gradient-to-r from-primary-50 to-accent-purple/10 border border-primary-200 rounded-full px-6 py-3 mb-8">
-              <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center mr-3">
-                <Satellite className="w-4 h-4 text-white" />
+            <div className="inline-flex items-center bg-gradient-to-r from-primary-50 to-accent-purple/10 border border-primary-200 rounded-full px-3 py-1.5 mb-4">
+              <div className="w-5 h-5 bg-primary-500 rounded-full flex items-center justify-center mr-2">
+                <Satellite className="w-3 h-3 text-white" />
               </div>
-              <span className="text-primary-600 font-semibold text-sm tracking-wide">
+              <span className="text-primary-600 font-semibold text-xs tracking-wide">
                 ENTERPRISE MICROWAVE SOLUTIONS
               </span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3 leading-tight">
               Point-to-Point
               <br />
               <span className="bg-gradient-to-r from-primary-500 via-accent-purple to-accent-blue bg-clip-text text-transparent">
@@ -67,34 +67,34 @@ export default function MicrowaveHero() {
               Connectivity
             </h1>
 
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
+            <p className="text-sm text-gray-600 mb-4 leading-relaxed max-w-xl">
               Experience enterprise-grade point-to-point microwave links for mission-critical applications. 
               Perfect for businesses requiring dedicated, high-speed connectivity with guaranteed performance.
             </p>
 
             {/* Key Benefits */}
-            <div className="flex flex-wrap gap-6 mb-10">
+            <div className="flex flex-wrap gap-3 mb-6">
               <div className="flex items-center">
-                <CheckCircle className="w-5 h-5 text-accent-green mr-2" />
-                <span className="text-gray-700 font-medium">Dedicated Bandwidth</span>
+                <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
+                <span className="text-gray-700 font-medium text-xs">Dedicated Bandwidth</span>
               </div>
               <div className="flex items-center">
-                <CheckCircle className="w-5 h-5 text-accent-green mr-2" />
-                <span className="text-gray-700 font-medium">Low Latency</span>
+                <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
+                <span className="text-gray-700 font-medium text-xs">Low Latency</span>
               </div>
               <div className="flex items-center">
-                <CheckCircle className="w-5 h-5 text-accent-green mr-2" />
-                <span className="text-gray-700 font-medium">Weather Resistant</span>
+                <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
+                <span className="text-gray-700 font-medium text-xs">Weather Resistant</span>
               </div>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="group bg-primary-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:bg-primary-600 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center">
+              <button className="group bg-primary-500 text-white px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-300 hover:bg-primary-600 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center">
                 View Solutions
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
-              <button className="group bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:border-primary-300 hover:text-primary-600 flex items-center justify-center">
+              <button className="group bg-white border-2 border-gray-200 text-gray-700 px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-300 hover:border-primary-300 hover:text-primary-600 flex items-center justify-center">
                 Site Survey
               </button>
             </div>
@@ -103,23 +103,23 @@ export default function MicrowaveHero() {
           {/* Right Column - Visual */}
           <div className={`relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* Signal Visualization */}
-            <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 mb-6">
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Link Quality</h3>
-                <p className="text-gray-600">Point-to-Point Connection</p>
+            <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-4 mb-3">
+              <div className="text-center mb-3">
+                <h3 className="text-base font-bold text-gray-900 mb-1">Link Quality</h3>
+                <p className="text-gray-600 text-sm">Point-to-Point Connection</p>
               </div>
 
               {/* Microwave Link Visualization */}
-              <div className="relative h-32 mb-6">
+              <div className="relative h-20 mb-3">
                 {/* Tower A */}
                 <div className="absolute left-4 bottom-0 flex flex-col items-center">
-                  <div className="w-4 h-20 bg-gradient-to-t from-gray-400 to-gray-600 rounded-t-sm mb-2"></div>
-                  <div className="w-8 h-3 bg-primary-500 rounded-sm mb-1"></div>
+                  <div className="w-3 h-16 bg-gradient-to-t from-gray-400 to-gray-600 rounded-t-sm mb-1.5"></div>
+                  <div className="w-6 h-2.5 bg-primary-500 rounded-sm mb-1"></div>
                   <span className="text-xs text-gray-600">Site A</span>
                 </div>
 
                 {/* Signal Waves */}
-                <div className="absolute left-12 top-8 right-12 flex items-center justify-center">
+                <div className="absolute left-8 top-6 right-8 flex items-center justify-center">
                   {[1, 2, 3, 4, 5].map((wave) => (
                     <div
                       key={wave}
@@ -134,50 +134,50 @@ export default function MicrowaveHero() {
 
                 {/* Tower B */}
                 <div className="absolute right-4 bottom-0 flex flex-col items-center">
-                  <div className="w-4 h-20 bg-gradient-to-t from-gray-400 to-gray-600 rounded-t-sm mb-2"></div>
-                  <div className="w-8 h-3 bg-primary-500 rounded-sm mb-1"></div>
+                  <div className="w-3 h-16 bg-gradient-to-t from-gray-400 to-gray-600 rounded-t-sm mb-1.5"></div>
+                  <div className="w-6 h-2.5 bg-primary-500 rounded-sm mb-1"></div>
                   <span className="text-xs text-gray-600">Site B</span>
                 </div>
               </div>
 
               {/* Signal Metrics */}
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="text-center p-3 bg-gradient-to-r from-accent-green/10 to-accent-blue/10 rounded-xl">
-                  <Signal className="w-5 h-5 text-accent-green mx-auto mb-1" />
-                  <div className="text-lg font-bold text-gray-900">{signalStrength}%</div>
-                  <div className="text-sm text-gray-600">Signal Strength</div>
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                <div className="text-center p-1.5 bg-gradient-to-r from-accent-green/10 to-accent-blue/10 rounded-lg">
+                  <Signal className="w-3 h-3 text-accent-green mx-auto mb-0.5" />
+                  <div className="text-sm font-bold text-gray-900">{signalStrength}%</div>
+                  <div className="text-xs text-gray-600">Signal Strength</div>
                 </div>
-                <div className="text-center p-3 bg-gradient-to-r from-accent-purple/10 to-primary/10 rounded-xl">
-                  <Zap className="w-5 h-5 text-accent-purple mx-auto mb-1" />
-                  <div className="text-lg font-bold text-gray-900">&lt;2ms</div>
-                  <div className="text-sm text-gray-600">Latency</div>
+                <div className="text-center p-1.5 bg-gradient-to-r from-accent-purple/10 to-primary/10 rounded-lg">
+                  <Zap className="w-3 h-3 text-accent-purple mx-auto mb-0.5" />
+                  <div className="text-sm font-bold text-gray-900">&lt;2ms</div>
+                  <div className="text-xs text-gray-600">Latency</div>
                 </div>
               </div>
 
               {/* Status */}
               <div className="text-center">
-                <div className="inline-flex items-center bg-accent-green/10 text-accent-green px-4 py-2 rounded-full">
-                  <div className="w-2 h-2 bg-accent-green rounded-full mr-2 animate-pulse"></div>
+                <div className="inline-flex items-center bg-accent-green/10 text-accent-green px-3 py-1.5 rounded-full">
+                  <div className="w-1.5 h-1.5 bg-accent-green rounded-full mr-1.5 animate-pulse"></div>
                   <span className="font-medium">Link Established</span>
                 </div>
               </div>
             </div>
 
             {/* Feature Cards */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-primary-500 to-accent-purple p-6 rounded-2xl text-white">
-                <div className="text-2xl font-bold mb-1">99.99%</div>
-                <p className="text-sm text-white/80">Availability</p>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-gradient-to-br from-primary-500 to-accent-purple p-3 rounded-2xl text-white">
+                <div className="text-base font-bold mb-0.5">99.99%</div>
+                <p className="text-xs text-white/80">Availability</p>
               </div>
-              <div className="bg-gradient-to-br from-accent-blue to-accent-green p-6 rounded-2xl text-white">
-                <div className="text-2xl font-bold mb-1">1Gbps+</div>
-                <p className="text-sm text-white/80">Dedicated Speed</p>
+              <div className="bg-gradient-to-br from-accent-blue to-accent-green p-3 rounded-2xl text-white">
+                <div className="text-base font-bold mb-0.5">1Gbps+</div>
+                <p className="text-xs text-white/80">Dedicated Speed</p>
               </div>
             </div>
 
             {/* Decorative Elements */}
-            <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-primary-400 to-accent-purple rounded-full opacity-20 animate-pulse"></div>
-            <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-accent-green to-accent-blue rounded-full opacity-20 animate-bounce"></div>
+            <div className="absolute -top-3 -right-3 w-16 h-16 bg-gradient-to-r from-primary-400 to-accent-purple rounded-full opacity-20 animate-pulse"></div>
+            <div className="absolute -bottom-3 -left-3 w-12 h-12 bg-gradient-to-r from-accent-green to-accent-blue rounded-full opacity-20 animate-bounce"></div>
           </div>
         </div>
       </div>

@@ -66,21 +66,21 @@ const packages = [
 
 export default function MicrowavePackages() {
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-12 px-6 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
             Microwave <span className="text-primary-500">Packages</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base text-gray-600 max-w-3xl mx-auto">
             Enterprise-grade point-to-point microwave links designed for businesses 
             that demand reliability, speed, and dedicated connectivity.
           </p>
         </div>
 
         {/* Packages Grid */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid lg:grid-cols-3 gap-6 mb-12">
           {packages.map((pkg, index) => {
             const IconComponent = pkg.icon;
             return (
@@ -98,50 +98,50 @@ export default function MicrowavePackages() {
                   </div>
                 )}
 
-                <div className="p-8">
+                <div className="p-5">
                   {/* Package Icon & Header */}
-                  <div className="text-center mb-8">
-                    <div className={`inline-flex p-4 rounded-2xl ${pkg.color} mb-4`}>
-                      <IconComponent className="w-8 h-8 text-white" />
+                  <div className="text-center mb-4">
+                    <div className={`inline-flex p-2 rounded-xl ${pkg.color} mb-2`}>
+                      <IconComponent className="w-5 h-5 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{pkg.name}</h3>
-                    <p className="text-gray-600">{pkg.description}</p>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">{pkg.name}</h3>
+                    <p className="text-gray-600 text-sm">{pkg.description}</p>
                   </div>
 
                   {/* Speed Display */}
-                  <div className="text-center mb-8">
-                    <div className="bg-gray-50 rounded-2xl p-6">
-                      <div className="text-4xl font-bold text-primary-500 mb-2">
+                  <div className="text-center mb-4">
+                    <div className="bg-gray-50 rounded-xl p-3">
+                      <div className="text-2xl font-bold text-primary-500 mb-1">
                         {pkg.speed}
                       </div>
-                      <div className="text-sm text-gray-500">Symmetrical Speed</div>
+                      <div className="text-xs text-gray-500">Symmetrical Speed</div>
                     </div>
                   </div>
 
                   {/* Pricing */}
-                  <div className="text-center mb-8">
+                  <div className="text-center mb-4">
                     <div className="flex items-baseline justify-center">
-                      <span className="text-5xl font-bold text-gray-900">{pkg.price}</span>
-                      <span className="text-xl text-gray-500 ml-2">{pkg.period}</span>
+                      <span className="text-3xl font-bold text-gray-900">{pkg.price}</span>
+                      <span className="text-base text-gray-500 ml-2">{pkg.period}</span>
                     </div>
-                    <p className="text-sm text-gray-500 mt-2">Excluding VAT</p>
+                    <p className="text-xs text-gray-500 mt-1">Excluding VAT</p>
                   </div>
 
                   {/* Features */}
-                  <div className="space-y-4 mb-8">
+                  <div className="space-y-2 mb-4">
                     {pkg.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-start">
                         <div className="flex-shrink-0">
-                          <Check className="w-5 h-5 text-green-500 mt-0.5" />
+                          <Check className="w-3 h-3 text-green-500 mt-0.5" />
                         </div>
-                        <span className="ml-3 text-gray-700">{feature}</span>
+                        <span className="ml-2 text-gray-700 text-sm">{feature}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* CTA Button */}
                   <button
-                    className={`w-full py-4 px-6 rounded-2xl font-semibold transition-all duration-300 ${
+                    className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
                       pkg.popular
                         ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
                         : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
@@ -156,38 +156,38 @@ export default function MicrowavePackages() {
         </div>
 
         {/* Additional Info */}
-        <div className="bg-white rounded-3xl shadow-xl p-12">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="bg-white rounded-2xl shadow-lg p-6">
+          <div className="grid md:grid-cols-2 gap-6 items-center">
             <div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
                 Why Choose Microwave Connectivity?
               </h3>
-              <div className="space-y-6">
+              <div className="space-y-3">
                 <div className="flex items-start">
-                  <Shield className="w-6 h-6 text-primary-500 mt-1 mr-4 flex-shrink-0" />
+                  <Shield className="w-4 h-4 text-primary-500 mt-1 mr-2 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Dedicated Bandwidth</h4>
-                    <p className="text-gray-600">
+                    <h4 className="font-semibold text-gray-900 mb-1 text-sm">Dedicated Bandwidth</h4>
+                    <p className="text-gray-600 text-sm">
                       Unlike shared connections, microwave links provide dedicated bandwidth 
                       exclusively for your business.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <Zap className="w-6 h-6 text-primary-500 mt-1 mr-4 flex-shrink-0" />
+                  <Zap className="w-4 h-4 text-primary-500 mt-1 mr-2 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Ultra-Low Latency</h4>
-                    <p className="text-gray-600">
+                    <h4 className="font-semibold text-gray-900 mb-1 text-sm">Ultra-Low Latency</h4>
+                    <p className="text-gray-600 text-sm">
                       Direct point-to-point transmission ensures minimal latency, 
                       perfect for real-time applications.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <Building2 className="w-6 h-6 text-primary-500 mt-1 mr-4 flex-shrink-0" />
+                  <Building2 className="w-4 h-4 text-primary-500 mt-1 mr-2 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Quick Deployment</h4>
-                    <p className="text-gray-600">
+                    <h4 className="font-semibold text-gray-900 mb-1 text-sm">Quick Deployment</h4>
+                    <p className="text-gray-600 text-sm">
                       No digging required. Microwave links can be installed quickly 
                       in locations where fiber is not available.
                     </p>
@@ -196,13 +196,13 @@ export default function MicrowavePackages() {
               </div>
             </div>
             <div className="text-center">
-              <div className="bg-gradient-to-br from-primary-500 to-purple-600 rounded-3xl p-8 text-white">
-                <h4 className="text-2xl font-bold mb-4">Need a Custom Solution?</h4>
-                <p className="mb-6">
+              <div className="bg-gradient-to-br from-primary-500 to-purple-600 rounded-2xl p-4 text-white">
+                <h4 className="text-lg font-bold mb-2">Need a Custom Solution?</h4>
+                <p className="mb-3 text-sm">
                   We design bespoke microwave networks for enterprise clients 
                   with specific requirements.
                 </p>
-                <button className="bg-white text-primary-500 px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
+                <button className="bg-white text-primary-500 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm">
                   Contact Sales
                 </button>
               </div>

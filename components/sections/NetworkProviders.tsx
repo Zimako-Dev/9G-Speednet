@@ -77,30 +77,30 @@ export default function NetworkProviders() {
   }, []);
 
   return (
-    <section id="network-providers" className="py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
+    <section id="network-providers" className="py-16 px-6 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
             Network <span className="text-primary-500">Providers</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm text-gray-600 max-w-3xl mx-auto leading-relaxed">
             We partner with South Africa's leading mobile network operators to provide 
             you with the best coverage and performance. Choose your preferred network or 
             let us recommend the best option for your location.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
           {/* Provider Selection */}
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            <h3 className="text-3xl font-bold text-gray-900 mb-8">Available Networks</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-5">Available Networks</h3>
             
-            <div className="space-y-4">
+            <div className="space-y-3">
               {networkProviders.map((provider, index) => (
                 <div
                   key={provider.name}
-                  className={`p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 ${
+                  className={`p-4 rounded-2xl border-2 cursor-pointer transition-all duration-300 ${
                     selectedProvider === index
                       ? 'border-primary-500 bg-primary-50 shadow-lg'
                       : 'border-gray-200 bg-white hover:border-primary-300 hover:shadow-md'
@@ -110,17 +110,17 @@ export default function NetworkProviders() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       {/* Network Logo Placeholder */}
-                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${provider.color} flex items-center justify-center mr-4`}>
-                        <Signal className="w-6 h-6 text-white" />
+                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-r ${provider.color} flex items-center justify-center mr-3`}>
+                        <Signal className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-bold text-gray-900">{provider.name}</h4>
-                        <p className="text-gray-600">{provider.coverage} National Coverage</p>
+                        <h4 className="text-base font-bold text-gray-900">{provider.name}</h4>
+                        <p className="text-gray-600 text-sm">{provider.coverage} National Coverage</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-lg font-semibold text-primary-500">{provider.speeds}</div>
-                      <div className="text-sm text-gray-500">{provider.technology}</div>
+                      <div className="text-base font-semibold text-primary-500">{provider.speeds}</div>
+                      <div className="text-xs text-gray-500">{provider.technology}</div>
                     </div>
                   </div>
                 </div>
@@ -128,22 +128,22 @@ export default function NetworkProviders() {
             </div>
 
             {/* Network Selection Benefits */}
-            <div className="mt-8 p-6 bg-white rounded-2xl border border-gray-200">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <Shield className="w-5 h-5 text-accent-green mr-2" />
+            <div className="mt-6 p-4 bg-white rounded-2xl border border-gray-200">
+              <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
+                <Shield className="w-3 h-3 text-accent-green mr-1" />
                 Multi-Network Advantage
               </h4>
-              <ul className="space-y-2 text-gray-600">
+              <ul className="space-y-1 text-gray-600 text-xs">
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
+                  <CheckCircle className="w-3 h-3 text-accent-green mr-1" />
                   <span>Automatic best network selection</span>
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
+                  <CheckCircle className="w-3 h-3 text-accent-green mr-1" />
                   <span>Failover to backup networks</span>
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
+                  <CheckCircle className="w-3 h-3 text-accent-green mr-1" />
                   <span>Optimized for your location</span>
                 </li>
               </ul>
@@ -152,39 +152,39 @@ export default function NetworkProviders() {
 
           {/* Provider Details */}
           <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-            <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8">
+            <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-6">
               {/* Selected Provider Header */}
-              <div className="text-center mb-8">
-                <div className={`w-20 h-20 rounded-3xl bg-gradient-to-r ${networkProviders[selectedProvider].color} flex items-center justify-center mx-auto mb-4`}>
-                  <Signal className="w-10 h-10 text-white" />
+              <div className="text-center mb-5">
+                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-r ${networkProviders[selectedProvider].color} flex items-center justify-center mx-auto mb-2`}>
+                  <Signal className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-gray-900 mb-1">
                   {networkProviders[selectedProvider].name}
                 </h3>
-                <p className="text-gray-600">Network Details & Coverage</p>
+                <p className="text-gray-600 text-xs">Network Details & Coverage</p>
               </div>
 
               {/* Network Stats */}
-              <div className="grid grid-cols-2 gap-6 mb-8">
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <div className="text-3xl font-bold text-primary-500 mb-1">
+              <div className="grid grid-cols-2 gap-3 mb-5">
+                <div className="text-center p-3 bg-gray-50 rounded-lg">
+                  <div className="text-lg font-bold text-primary-500 mb-0.5">
                     {networkProviders[selectedProvider].coverage}
                   </div>
-                  <p className="text-gray-600">Coverage</p>
+                  <p className="text-gray-600 text-xs">Coverage</p>
                 </div>
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <div className="text-2xl font-bold text-primary-500 mb-1">
+                <div className="text-center p-3 bg-gray-50 rounded-lg">
+                  <div className="text-lg font-bold text-primary-500 mb-0.5">
                     {networkProviders[selectedProvider].speeds.split(' ')[2]}
                   </div>
-                  <p className="text-gray-600">Max Speed</p>
+                  <p className="text-gray-600 text-xs">Max Speed</p>
                 </div>
               </div>
 
               {/* Technology Info */}
-              <div className="mb-8">
-                <h4 className="text-lg font-semibold text-gray-900 mb-3">Technology</h4>
-                <div className="bg-gradient-to-r from-primary-50 to-accent-blue/10 rounded-xl p-4">
-                  <p className="text-primary-600 font-semibold">
+              <div className="mb-5">
+                <h4 className="text-sm font-semibold text-gray-900 mb-1">Technology</h4>
+                <div className="bg-gradient-to-r from-primary-50 to-accent-blue/10 rounded-lg p-2">
+                  <p className="text-primary-600 font-semibold text-xs">
                     {networkProviders[selectedProvider].technology}
                   </p>
                 </div>
@@ -192,20 +192,20 @@ export default function NetworkProviders() {
 
               {/* Features */}
               <div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">Key Features</h4>
-                <ul className="space-y-3">
+                <h4 className="text-sm font-semibold text-gray-900 mb-2">Key Features</h4>
+                <ul className="space-y-1">
                   {networkProviders[selectedProvider].features.map((feature, index) => (
                     <li key={index} className="flex items-center">
-                      <CheckCircle className="w-5 h-5 text-accent-green mr-3" />
-                      <span className="text-gray-700">{feature}</span>
+                      <CheckCircle className="w-3 h-3 text-accent-green mr-1" />
+                      <span className="text-gray-700 text-xs">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               {/* Action Button */}
-              <div className="mt-8">
-                <button className="w-full bg-primary-500 text-white py-3 rounded-xl font-semibold hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+              <div className="mt-5">
+                <button className="w-full bg-primary-500 text-white py-2 rounded-lg font-semibold text-xs hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
                   Select {networkProviders[selectedProvider].name}
                 </button>
               </div>
@@ -214,13 +214,13 @@ export default function NetworkProviders() {
         </div>
 
         {/* Coverage Map Placeholder */}
-        <div className="mt-16 bg-white rounded-2xl p-8 border border-gray-200">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Network Coverage Map</h3>
-          <div className="h-64 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
+        <div className="mt-8 bg-white rounded-xl p-4 border border-gray-200">
+          <h3 className="text-base font-bold text-gray-900 mb-3 text-center">Network Coverage Map</h3>
+          <div className="h-32 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
             <div className="text-center">
-              <Signal className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-500">Interactive coverage map coming soon</p>
-              <p className="text-sm text-gray-400">Contact us for detailed coverage information in your area</p>
+              <Signal className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+              <p className="text-gray-500 text-xs">Interactive coverage map coming soon</p>
+              <p className="text-xs text-gray-400">Contact us for detailed coverage information in your area</p>
             </div>
           </div>
         </div>

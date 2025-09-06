@@ -47,17 +47,17 @@ export default function FibreHero() {
           {/* Left Column - Content */}
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* Service Badge */}
-            <div className="inline-flex items-center bg-gradient-to-r from-primary-50 to-accent-blue/10 border border-primary-200 rounded-full px-6 py-3 mb-8">
-              <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center mr-3">
+            <div className="inline-flex items-center bg-gradient-to-r from-primary-50 to-accent-blue/10 border border-primary-200 rounded-full px-4 py-2 mb-6">
+              <div className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center mr-2">
                 <Zap className="w-4 h-4 text-white" />
               </div>
-              <span className="text-primary-600 font-semibold text-sm tracking-wide">
+              <span className="text-primary-600 font-semibold text-xs tracking-wide">
                 PREMIUM FIBRE SOLUTIONS
               </span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 leading-tight">
               Lightning-Fast
               <br />
               <span className="bg-gradient-to-r from-primary-500 via-accent-purple to-accent-blue bg-clip-text text-transparent">
@@ -67,34 +67,34 @@ export default function FibreHero() {
               Internet
             </h1>
 
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
+            <p className="text-sm text-gray-600 mb-5 leading-relaxed max-w-xl">
               Experience the ultimate in internet connectivity with our premium fibre solutions. 
               Symmetrical speeds, unlimited data, and 99.9% uptime guarantee for homes and businesses.
             </p>
 
             {/* Key Benefits */}
-            <div className="flex flex-wrap gap-6 mb-10">
+            <div className="flex flex-wrap gap-4 mb-8">
               <div className="flex items-center">
-                <CheckCircle className="w-5 h-5 text-accent-green mr-2" />
-                <span className="text-gray-700 font-medium">Unlimited Data</span>
+                <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
+                <span className="text-gray-700 font-medium text-sm">Unlimited Data</span>
               </div>
               <div className="flex items-center">
-                <CheckCircle className="w-5 h-5 text-accent-green mr-2" />
-                <span className="text-gray-700 font-medium">Symmetrical Speeds</span>
+                <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
+                <span className="text-gray-700 font-medium text-sm">Symmetrical Speeds</span>
               </div>
               <div className="flex items-center">
-                <CheckCircle className="w-5 h-5 text-accent-green mr-2" />
-                <span className="text-gray-700 font-medium">99.9% Uptime</span>
+                <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
+                <span className="text-gray-700 font-medium text-sm">99.9% Uptime</span>
               </div>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="group bg-primary-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:bg-primary-600 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center">
+              <button className="group bg-primary-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:bg-primary-600 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center">
                 View Packages
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
-              <button className="group bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:border-primary-300 hover:text-primary-600 flex items-center justify-center">
+              <button className="group bg-white border-2 border-gray-200 text-gray-700 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:border-primary-300 hover:text-primary-600 flex items-center justify-center">
                 Check Availability
               </button>
             </div>
@@ -103,14 +103,14 @@ export default function FibreHero() {
           {/* Right Column - Visual */}
           <div className={`relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* Speed Meter */}
-            <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 mb-6">
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Fibre Speed</h3>
-                <p className="text-gray-600">Real-time performance</p>
+            <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 mb-3">
+              <div className="text-center mb-3">
+                <h3 className="text-base font-bold text-gray-900 mb-1">Fibre Speed</h3>
+                <p className="text-gray-600 text-xs">Real-time performance</p>
               </div>
 
               {/* Circular Speed Meter */}
-              <div className="relative w-48 h-48 mx-auto mb-6">
+              <div className="relative w-28 h-28 mx-auto mb-3">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                   {/* Background Circle */}
                   <circle
@@ -145,29 +145,29 @@ export default function FibreHero() {
                 {/* Speed Display */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-gray-900">
+                    <div className="text-xl font-bold text-gray-900">
                       {currentSpeed}
                     </div>
-                    <div className="text-sm text-gray-500">Mbps</div>
+                    <div className="text-xs text-gray-500">Mbps</div>
                   </div>
                 </div>
               </div>
 
               {/* Speed Info */}
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="text-center p-3 bg-gradient-to-r from-accent-green/10 to-accent-blue/10 rounded-xl">
-                  <div className="flex items-center justify-center mb-1">
-                    <Download className="w-4 h-4 text-accent-green mr-1" />
-                    <span className="text-sm text-gray-600">Download</span>
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                <div className="text-center p-1.5 bg-gradient-to-r from-accent-green/10 to-accent-blue/10 rounded-md">
+                  <div className="flex items-center justify-center mb-0.5">
+                    <Download className="w-2.5 h-2.5 text-accent-green mr-0.5" />
+                    <span className="text-xs text-gray-600">Download</span>
                   </div>
-                  <div className="text-lg font-bold text-gray-900">{currentSpeed} Mbps</div>
+                  <div className="text-sm font-bold text-gray-900">{currentSpeed} Mbps</div>
                 </div>
-                <div className="text-center p-3 bg-gradient-to-r from-accent-purple/10 to-primary/10 rounded-xl">
-                  <div className="flex items-center justify-center mb-1">
-                    <Upload className="w-4 h-4 text-accent-purple mr-1" />
-                    <span className="text-sm text-gray-600">Upload</span>
+                <div className="text-center p-1.5 bg-gradient-to-r from-accent-purple/10 to-primary/10 rounded-md">
+                  <div className="flex items-center justify-center mb-0.5">
+                    <Upload className="w-2.5 h-2.5 text-accent-purple mr-0.5" />
+                    <span className="text-xs text-gray-600">Upload</span>
                   </div>
-                  <div className="text-lg font-bold text-gray-900">{currentSpeed} Mbps</div>
+                  <div className="text-sm font-bold text-gray-900">{currentSpeed} Mbps</div>
                 </div>
               </div>
 
@@ -181,14 +181,14 @@ export default function FibreHero() {
             </div>
 
             {/* Feature Cards */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-primary-500 to-accent-purple p-6 rounded-2xl text-white">
-                <div className="text-2xl font-bold mb-1">Unlimited</div>
-                <p className="text-sm text-white/80">Data Usage</p>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-gradient-to-br from-primary-500 to-accent-purple p-3 rounded-xl text-white">
+                <div className="text-base font-bold mb-0.5">Unlimited</div>
+                <p className="text-xs text-white/80">Data Usage</p>
               </div>
-              <div className="bg-gradient-to-br from-accent-blue to-accent-green p-6 rounded-2xl text-white">
-                <div className="text-2xl font-bold mb-1">99.9%</div>
-                <p className="text-sm text-white/80">Uptime SLA</p>
+              <div className="bg-gradient-to-br from-accent-blue to-accent-green p-3 rounded-xl text-white">
+                <div className="text-base font-bold mb-0.5">99.9%</div>
+                <p className="text-xs text-white/80">Uptime SLA</p>
               </div>
             </div>
 

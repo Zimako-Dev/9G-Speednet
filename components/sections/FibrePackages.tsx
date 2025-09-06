@@ -140,25 +140,25 @@ export default function FibrePackages() {
     : fibrePackages.filter(pkg => pkg.category.includes(selectedCategory));
 
   return (
-    <section id="fibre-packages" className="py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
+    <section id="fibre-packages" className="py-16 px-6 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
             Fibre <span className="text-primary-500">Packages</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-sm text-gray-600 max-w-3xl mx-auto leading-relaxed mb-4">
             Choose from our range of high-speed fibre packages designed for homes and businesses. 
             All packages include unlimited data and symmetrical upload/download speeds.
           </p>
 
           {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                className={`px-3 py-1.5 rounded-full font-semibold text-xs transition-all duration-300 ${
                   selectedCategory === category
                     ? 'bg-primary-500 text-white shadow-lg'
                     : 'bg-white text-gray-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
@@ -171,7 +171,7 @@ export default function FibrePackages() {
         </div>
 
         {/* Package Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           {filteredPackages.map((pkg, index) => {
             const IconComponent = pkg.icon;
             return (
@@ -203,51 +203,51 @@ export default function FibrePackages() {
                   </span>
                 </div>
 
-                <div className="p-8">
+                <div className="p-4">
                   {/* Package Header */}
-                  <div className="text-center mb-6">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 ${
+                  <div className="text-center mb-4">
+                    <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg mb-2 ${
                       pkg.popular ? 'bg-primary-500' : 'bg-gray-100'
                     }`}>
-                      <IconComponent className={`w-8 h-8 ${
+                      <IconComponent className={`w-5 h-5 ${
                         pkg.popular ? 'text-white' : 'text-gray-600'
                       }`} />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{pkg.name}</h3>
-                    <div className="flex items-baseline justify-center mb-4">
-                      <span className="text-4xl font-bold text-primary-500">R{pkg.price}</span>
-                      <span className="text-gray-500 ml-2">/month</span>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">{pkg.name}</h3>
+                    <div className="flex items-baseline justify-center mb-2">
+                      <span className="text-xl font-bold text-primary-500">R{pkg.price}</span>
+                      <span className="text-gray-500 ml-1 text-xs">/month</span>
                     </div>
                     
                     {/* Speed Info */}
-                    <div className="bg-gradient-to-r from-gray-50 to-primary-50 rounded-xl p-4 mb-4">
-                      <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="bg-gradient-to-r from-gray-50 to-primary-50 rounded-md p-2 mb-2">
+                      <div className="grid grid-cols-2 gap-2 text-xs">
                         <div className="flex items-center justify-center">
-                          <Download className="w-4 h-4 text-accent-green mr-1" />
+                          <Download className="w-2.5 h-2.5 text-accent-green mr-0.5" />
                           <span className="text-gray-600">Down: </span>
-                          <span className="font-semibold text-gray-900 ml-1">{pkg.downloadSpeed}</span>
+                          <span className="font-semibold text-gray-900 ml-0.5">{pkg.downloadSpeed}</span>
                         </div>
                         <div className="flex items-center justify-center">
-                          <Upload className="w-4 h-4 text-accent-purple mr-1" />
+                          <Upload className="w-2.5 h-2.5 text-accent-purple mr-0.5" />
                           <span className="text-gray-600">Up: </span>
-                          <span className="font-semibold text-gray-900 ml-1">{pkg.uploadSpeed}</span>
+                          <span className="font-semibold text-gray-900 ml-0.5">{pkg.uploadSpeed}</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Features List */}
-                  <ul className="space-y-3 mb-8">
+                  <ul className="space-y-1.5 mb-4">
                     {pkg.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start">
-                        <Check className="w-4 h-4 text-accent-green mr-3 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm">{feature}</span>
+                        <Check className="w-2.5 h-2.5 text-accent-green mr-1.5 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700 text-xs">{feature}</span>
                       </li>
                     ))}
                   </ul>
 
                   {/* CTA Button */}
-                  <button className={`w-full py-4 rounded-2xl font-semibold text-lg transition-all duration-300 ${
+                  <button className={`w-full py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 ${
                     pkg.popular
                       ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
                       : 'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200 hover:border-primary-300'
@@ -261,13 +261,13 @@ export default function FibrePackages() {
         </div>
 
         {/* Custom Solutions */}
-        <div className="bg-white rounded-2xl p-8 border border-gray-200 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Need Higher Speeds?</h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+        <div className="bg-white rounded-lg p-4 border border-gray-200 text-center">
+          <h3 className="text-lg font-bold text-gray-900 mb-2">Need Higher Speeds?</h3>
+          <p className="text-gray-600 mb-3 max-w-2xl mx-auto text-xs">
             We offer custom fibre solutions with speeds up to 10 Gbps for enterprises with demanding requirements. 
             Contact our team for dedicated circuits and managed services.
           </p>
-          <button className="bg-primary-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+          <button className="bg-primary-500 text-white px-5 py-2 rounded-md font-semibold text-xs hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
             Request Enterprise Quote
           </button>
         </div>

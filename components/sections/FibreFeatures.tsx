@@ -53,46 +53,46 @@ export default function FibreFeatures() {
   }, []);
 
   return (
-    <section id="fibre-features" className="py-20 px-6 bg-white">
+    <section id="fibre-features" className="py-12 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
             Why Choose <span className="text-primary-500">Fibre</span>?
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Fibre optic technology delivers unparalleled internet performance with consistent speeds, 
             unlimited data, and reliability that traditional broadband simply can't match.
           </p>
         </div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {fibreFeatures.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
               <div
                 key={index}
-                className={`group bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:scale-105 ${
+                className={`group bg-white rounded-xl p-4 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:scale-105 ${
                   visibleFeatures[index] ? 'animate-fade-in' : 'opacity-0'
                 }`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Icon */}
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} p-4 mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <IconComponent className="w-8 h-8 text-white" />
+                <div className={`w-10 h-10 rounded-lg bg-gradient-to-r ${feature.color} p-2.5 mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                  <IconComponent className="w-5 h-5 text-white" />
                 </div>
 
                 {/* Content */}
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-primary-500 transition-colors duration-300">
+                <h3 className="text-base font-bold text-gray-900 mb-2 group-hover:text-primary-500 transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-xs">
                   {feature.description}
                 </p>
 
                 {/* Hover Effect */}
-                <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className={`w-full h-1 bg-gradient-to-r ${feature.color} rounded-full`}></div>
                 </div>
               </div>
@@ -101,8 +101,8 @@ export default function FibreFeatures() {
         </div>
 
         {/* Speed Comparison */}
-        <div className="bg-gradient-to-r from-gray-50 to-white rounded-3xl p-8 mb-16">
-          <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+        <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-4 mb-8">
+          <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
             Fibre vs Other Technologies
           </h3>
           
@@ -110,41 +110,41 @@ export default function FibreFeatures() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="text-left py-4 px-6 font-semibold text-gray-900">Technology</th>
-                  <th className="text-center py-4 px-6 font-semibold text-gray-900">Max Speed</th>
-                  <th className="text-center py-4 px-6 font-semibold text-gray-900">Latency</th>
-                  <th className="text-center py-4 px-6 font-semibold text-gray-900">Reliability</th>
-                  <th className="text-center py-4 px-6 font-semibold text-gray-900">Data Limits</th>
+                  <th className="text-left py-2 px-3 font-semibold text-gray-900 text-xs">Technology</th>
+                  <th className="text-center py-2 px-3 font-semibold text-gray-900 text-xs">Max Speed</th>
+                  <th className="text-center py-2 px-3 font-semibold text-gray-900 text-xs">Latency</th>
+                  <th className="text-center py-2 px-3 font-semibold text-gray-900 text-xs">Reliability</th>
+                  <th className="text-center py-2 px-3 font-semibold text-gray-900 text-xs">Data Limits</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-gray-100 bg-primary-50">
-                  <td className="py-4 px-6 font-semibold text-primary-600">Fibre Optic</td>
-                  <td className="text-center py-4 px-6 text-gray-900">1000+ Mbps</td>
-                  <td className="text-center py-4 px-6 text-accent-green font-semibold">1-5ms</td>
-                  <td className="text-center py-4 px-6 text-accent-green font-semibold">99.9%</td>
-                  <td className="text-center py-4 px-6 text-accent-green font-semibold">Unlimited</td>
+                  <td className="py-2 px-3 font-semibold text-primary-600 text-xs">Fibre Optic</td>
+                  <td className="text-center py-2 px-3 text-gray-900 text-xs">1000+ Mbps</td>
+                  <td className="text-center py-2 px-3 text-accent-green font-semibold text-xs">1-5ms</td>
+                  <td className="text-center py-2 px-3 text-accent-green font-semibold text-xs">99.9%</td>
+                  <td className="text-center py-2 px-3 text-accent-green font-semibold text-xs">Unlimited</td>
                 </tr>
                 <tr className="border-b border-gray-100">
-                  <td className="py-4 px-6 text-gray-700">ADSL</td>
-                  <td className="text-center py-4 px-6 text-gray-700">24 Mbps</td>
-                  <td className="text-center py-4 px-6 text-orange-600">20-50ms</td>
-                  <td className="text-center py-4 px-6 text-orange-600">95%</td>
-                  <td className="text-center py-4 px-6 text-orange-600">Limited</td>
+                  <td className="py-2 px-3 text-gray-700 text-xs">ADSL</td>
+                  <td className="text-center py-2 px-3 text-gray-700 text-xs">24 Mbps</td>
+                  <td className="text-center py-2 px-3 text-orange-600 text-xs">20-50ms</td>
+                  <td className="text-center py-2 px-3 text-orange-600 text-xs">95%</td>
+                  <td className="text-center py-2 px-3 text-orange-600 text-xs">Limited</td>
                 </tr>
                 <tr className="border-b border-gray-100">
-                  <td className="py-4 px-6 text-gray-700">LTE</td>
-                  <td className="text-center py-4 px-6 text-gray-700">100 Mbps</td>
-                  <td className="text-center py-4 px-6 text-orange-600">20-40ms</td>
-                  <td className="text-center py-4 px-6 text-orange-600">90-95%</td>
-                  <td className="text-center py-4 px-6 text-red-600">Capped</td>
+                  <td className="py-2 px-3 text-gray-700 text-xs">LTE</td>
+                  <td className="text-center py-2 px-3 text-gray-700 text-xs">100 Mbps</td>
+                  <td className="text-center py-2 px-3 text-orange-600 text-xs">20-40ms</td>
+                  <td className="text-center py-2 px-3 text-orange-600 text-xs">90-95%</td>
+                  <td className="text-center py-2 px-3 text-red-600 text-xs">Capped</td>
                 </tr>
                 <tr>
-                  <td className="py-4 px-6 text-gray-700">Satellite</td>
-                  <td className="text-center py-4 px-6 text-gray-700">50 Mbps</td>
-                  <td className="text-center py-4 px-6 text-red-600">600ms+</td>
-                  <td className="text-center py-4 px-6 text-orange-600">85-90%</td>
-                  <td className="text-center py-4 px-6 text-red-600">Severely Limited</td>
+                  <td className="py-2 px-3 text-gray-700 text-xs">Satellite</td>
+                  <td className="text-center py-2 px-3 text-gray-700 text-xs">50 Mbps</td>
+                  <td className="text-center py-2 px-3 text-red-600 text-xs">600ms+</td>
+                  <td className="text-center py-2 px-3 text-orange-600 text-xs">85-90%</td>
+                  <td className="text-center py-2 px-3 text-red-600 text-xs">Severely Limited</td>
                 </tr>
               </tbody>
             </table>
@@ -152,78 +152,78 @@ export default function FibreFeatures() {
         </div>
 
         {/* Use Cases */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
           {/* Home Users */}
-          <div className="bg-white rounded-2xl p-8 border border-gray-200">
-            <h4 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <Users className="w-6 h-6 text-primary-500 mr-3" />
+          <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <h4 className="text-base font-bold text-gray-900 mb-3 flex items-center">
+              <Users className="w-4 h-4 text-primary-500 mr-1.5" />
               Perfect for Homes
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-2">
               <li className="flex items-start">
-                <div className="w-2 h-2 bg-accent-green rounded-full mt-2 mr-3"></div>
+                <div className="w-1 h-1 bg-accent-green rounded-full mt-1.5 mr-1.5"></div>
                 <div>
-                  <span className="font-semibold text-gray-900">4K/8K Streaming: </span>
-                  <span className="text-gray-600">Multiple simultaneous streams without buffering</span>
+                  <span className="font-semibold text-gray-900 text-xs">4K/8K Streaming: </span>
+                  <span className="text-gray-600 text-xs">Multiple simultaneous streams without buffering</span>
                 </div>
               </li>
               <li className="flex items-start">
-                <div className="w-2 h-2 bg-accent-green rounded-full mt-2 mr-3"></div>
+                <div className="w-1 h-1 bg-accent-green rounded-full mt-1.5 mr-1.5"></div>
                 <div>
-                  <span className="font-semibold text-gray-900">Gaming: </span>
-                  <span className="text-gray-600">Ultra-low latency for competitive online gaming</span>
+                  <span className="font-semibold text-gray-900 text-xs">Gaming: </span>
+                  <span className="text-gray-600 text-xs">Ultra-low latency for competitive online gaming</span>
                 </div>
               </li>
               <li className="flex items-start">
-                <div className="w-2 h-2 bg-accent-green rounded-full mt-2 mr-3"></div>
+                <div className="w-1 h-1 bg-accent-green rounded-full mt-1.5 mr-1.5"></div>
                 <div>
-                  <span className="font-semibold text-gray-900">Smart Home: </span>
-                  <span className="text-gray-600">Support for IoT devices and home automation</span>
+                  <span className="font-semibold text-gray-900 text-xs">Smart Home: </span>
+                  <span className="text-gray-600 text-xs">Support for IoT devices and home automation</span>
                 </div>
               </li>
               <li className="flex items-start">
-                <div className="w-2 h-2 bg-accent-green rounded-full mt-2 mr-3"></div>
+                <div className="w-1 h-1 bg-accent-green rounded-full mt-1.5 mr-1.5"></div>
                 <div>
-                  <span className="font-semibold text-gray-900">Work from Home: </span>
-                  <span className="text-gray-600">HD video calls and large file uploads</span>
+                  <span className="font-semibold text-gray-900 text-xs">Work from Home: </span>
+                  <span className="text-gray-600 text-xs">HD video calls and large file uploads</span>
                 </div>
               </li>
             </ul>
           </div>
 
           {/* Business Users */}
-          <div className="bg-white rounded-2xl p-8 border border-gray-200">
-            <h4 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <Globe className="w-6 h-6 text-primary-500 mr-3" />
+          <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <h4 className="text-base font-bold text-gray-900 mb-3 flex items-center">
+              <Globe className="w-4 h-4 text-primary-500 mr-1.5" />
               Perfect for Business
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-2">
               <li className="flex items-start">
-                <div className="w-2 h-2 bg-accent-blue rounded-full mt-2 mr-3"></div>
+                <div className="w-1 h-1 bg-accent-blue rounded-full mt-1.5 mr-1.5"></div>
                 <div>
-                  <span className="font-semibold text-gray-900">Cloud Applications: </span>
-                  <span className="text-gray-600">Fast access to SaaS platforms and cloud storage</span>
+                  <span className="font-semibold text-gray-900 text-xs">Cloud Applications: </span>
+                  <span className="text-gray-600 text-xs">Fast access to SaaS platforms and cloud storage</span>
                 </div>
               </li>
               <li className="flex items-start">
-                <div className="w-2 h-2 bg-accent-blue rounded-full mt-2 mr-3"></div>
+                <div className="w-1 h-1 bg-accent-blue rounded-full mt-1.5 mr-1.5"></div>
                 <div>
-                  <span className="font-semibold text-gray-900">Video Conferencing: </span>
-                  <span className="text-gray-600">Crystal clear HD meetings with multiple participants</span>
+                  <span className="font-semibold text-gray-900 text-xs">Video Conferencing: </span>
+                  <span className="text-gray-600 text-xs">Crystal clear HD meetings with multiple participants</span>
                 </div>
               </li>
               <li className="flex items-start">
-                <div className="w-2 h-2 bg-accent-blue rounded-full mt-2 mr-3"></div>
+                <div className="w-1 h-1 bg-accent-blue rounded-full mt-1.5 mr-1.5"></div>
                 <div>
-                  <span className="font-semibold text-gray-900">File Sharing: </span>
-                  <span className="text-gray-600">Rapid transfer of large files and backups</span>
+                  <span className="font-semibold text-gray-900 text-xs">File Sharing: </span>
+                  <span className="text-gray-600 text-xs">Rapid transfer of large files and backups</span>
                 </div>
               </li>
               <li className="flex items-start">
-                <div className="w-2 h-2 bg-accent-blue rounded-full mt-2 mr-3"></div>
+                <div className="w-1 h-1 bg-accent-blue rounded-full mt-1.5 mr-1.5"></div>
                 <div>
-                  <span className="font-semibold text-gray-900">VoIP Systems: </span>
-                  <span className="text-gray-600">High-quality voice communications</span>
+                  <span className="font-semibold text-gray-900 text-xs">VoIP Systems: </span>
+                  <span className="text-gray-600 text-xs">High-quality voice communications</span>
                 </div>
               </li>
             </ul>
@@ -231,17 +231,17 @@ export default function FibreFeatures() {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center bg-gradient-to-r from-primary-500 via-accent-purple to-accent-blue rounded-3xl p-12 text-white">
-          <h3 className="text-4xl font-bold mb-4">Ready for Fibre-Fast Internet?</h3>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+        <div className="text-center bg-gradient-to-r from-primary-500 via-accent-purple to-accent-blue rounded-xl p-6 text-white">
+          <h3 className="text-xl font-bold mb-2">Ready for Fibre-Fast Internet?</h3>
+          <p className="text-sm text-white/90 mb-4 max-w-2xl mx-auto">
             Join thousands of satisfied customers enjoying unlimited, lightning-fast internet 
             with our premium fibre solutions.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-primary-500 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg">
+          <div className="flex flex-col sm:flex-row gap-2 justify-center">
+            <button className="bg-white text-primary-500 px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg">
               Check Availability
             </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-white hover:text-primary-500 transition-all duration-300">
+            <button className="bg-transparent border-2 border-white text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-white hover:text-primary-500 transition-all duration-300">
               View All Packages
             </button>
           </div>

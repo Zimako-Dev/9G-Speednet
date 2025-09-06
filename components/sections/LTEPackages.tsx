@@ -83,21 +83,21 @@ export default function LTEPackages() {
   const [hoveredPackage, setHoveredPackage] = useState<number | null>(null);
 
   return (
-    <section id="lte-packages" className="py-20 px-6 bg-white">
+    <section id="lte-packages" className="py-16 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
             Fixed LTE <span className="text-primary-500">Packages</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Choose from our range of Fixed LTE packages designed to meet your connectivity needs. 
             All packages include professional installation and access to multiple network providers.
           </p>
         </div>
 
         {/* Package Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {ltePackages.map((pkg, index) => {
             const IconComponent = pkg.icon;
             return (
@@ -122,45 +122,45 @@ export default function LTEPackages() {
                   </div>
                 )}
 
-                <div className="p-6">
+                <div className="p-5">
                   {/* Package Header */}
-                  <div className="text-center mb-6">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 ${
+                  <div className="text-center mb-5">
+                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-2xl mb-3 ${
                       pkg.popular ? 'bg-primary-500' : 'bg-gray-100'
                     }`}>
-                      <IconComponent className={`w-8 h-8 ${
+                      <IconComponent className={`w-6 h-6 ${
                         pkg.popular ? 'text-white' : 'text-gray-600'
                       }`} />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{pkg.name}</h3>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">{pkg.name}</h3>
                     <div className="flex items-baseline justify-center mb-2">
-                      <span className="text-4xl font-bold text-primary-500">R{pkg.price}</span>
-                      <span className="text-gray-500 ml-2">/month</span>
+                      <span className="text-xl font-bold text-primary-500">R{pkg.price}</span>
+                      <span className="text-gray-500 ml-2 text-sm">/month</span>
                     </div>
-                    <div className="flex items-center justify-center space-x-4 text-sm text-gray-600">
+                    <div className="flex items-center justify-center space-x-3 text-xs text-gray-600">
                       <div className="flex items-center">
-                        <Download className="w-4 h-4 mr-1" />
+                        <Download className="w-3 h-3 mr-1" />
                         <span>{pkg.data}</span>
                       </div>
                       <div className="flex items-center">
-                        <Zap className="w-4 h-4 mr-1" />
+                        <Zap className="w-3 h-3 mr-1" />
                         <span>{pkg.speed}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Features List */}
-                  <ul className="space-y-3 mb-6">
+                  <ul className="space-y-2 mb-5">
                     {pkg.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start">
-                        <Check className="w-4 h-4 text-accent-green mr-2 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm">{feature}</span>
+                        <Check className="w-3 h-3 text-accent-green mr-2 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700 text-xs">{feature}</span>
                       </li>
                     ))}
                   </ul>
 
                   {/* CTA Button */}
-                  <button className={`w-full py-3 rounded-2xl font-semibold text-lg transition-all duration-300 ${
+                  <button className={`w-full py-2.5 rounded-2xl font-semibold text-sm transition-all duration-300 ${
                     pkg.popular
                       ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
                       : 'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200 hover:border-primary-300'
@@ -174,13 +174,13 @@ export default function LTEPackages() {
         </div>
 
         {/* Additional Info */}
-        <div className="bg-gradient-to-r from-gray-50 to-white rounded-2xl p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Need a Custom Solution?</h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+        <div className="bg-gradient-to-r from-gray-50 to-white rounded-2xl p-6 text-center">
+          <h3 className="text-lg font-bold text-gray-900 mb-3">Need a Custom Solution?</h3>
+          <p className="text-gray-600 mb-4 max-w-2xl mx-auto text-sm">
             We offer tailored Fixed LTE solutions for businesses with specific requirements. 
             Contact our team for custom data allowances, dedicated support, and enterprise features.
           </p>
-          <button className="bg-primary-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+          <button className="bg-primary-500 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
             Request Custom Quote
           </button>
         </div>
