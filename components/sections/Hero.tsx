@@ -68,7 +68,7 @@ export default function Hero() {
             </h1>
 
             <p className="text-sm text-gray-600 mb-5 leading-relaxed max-w-xl">
-              Transform your digital life with 9G Speednet's cutting-edge fiber network. 
+              Transform your digital life with 9G Speednet's cutting-edge fiber and broadband network. 
               Experience unparalleled speed, reliability, and customer service.
             </p>
 
@@ -111,11 +111,11 @@ export default function Hero() {
             {/* Trust Indicators */}
             <div className="flex items-center space-x-4 text-xs text-gray-500">
               <div className="text-center">
-                <div className="text-base font-bold text-gray-900">50K+</div>
+                <div className="text-base font-bold text-gray-900">13K+</div>
                 <div className="text-xs">Happy Customers</div>
               </div>
               <div className="text-center">
-                <div className="text-base font-bold text-gray-900">15+</div>
+                <div className="text-base font-bold text-gray-900">8+</div>
                 <div className="text-xs">Years Experience</div>
               </div>
               <div className="text-center">
