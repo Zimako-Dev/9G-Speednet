@@ -151,7 +151,7 @@ export default function Testimonials() {
         <div className="mt-12 text-center">
           <p className="text-sm text-gray-500 mb-6">Trusted by thousands of customers</p>
           <div className="flex justify-center items-center space-x-8 opacity-50">
-            <div className="text-lg font-bold text-gray-400">50K+ Customers</div>
+            <div className="text-lg font-bold text-gray-400">13K+ Customers</div>
             <div className="text-lg font-bold text-gray-400">5★ Rating</div>
             <div className="text-lg font-bold text-gray-400">Award Winner</div>
           </div>

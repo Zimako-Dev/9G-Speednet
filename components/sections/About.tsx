@@ -65,12 +65,12 @@ export default function About() {
             <div className="grid grid-cols-2 gap-3 mt-5">
               <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                 <Award className="w-6 h-6 text-primary-500 mb-2" />
-                <div className="text-xl font-bold text-gray-900 mb-1">15+</div>
+                <div className="text-xl font-bold text-gray-900 mb-1">8+</div>
                 <p className="text-sm text-gray-600">Years Experience</p>
               </div>
               <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                 <Users className="w-6 h-6 text-accent-green mb-2" />
-                <div className="text-xl font-bold text-gray-900 mb-1">50K+</div>
+                <div className="text-xl font-bold text-gray-900 mb-1">13K+</div>
                 <p className="text-sm text-gray-600">Happy Customers</p>
               </div>
             </div>

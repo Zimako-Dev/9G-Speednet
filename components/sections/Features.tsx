@@ -105,7 +105,7 @@ export default function Features() {
           <div className="grid md:grid-cols-4 gap-6 text-center">
             <div className="group">
               <div className="text-2xl md:text-3xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
-                50K+
+                13K+
               </div>
               <p className="text-base text-white/90">Happy Customers</p>
             </div>
