@@ -20,17 +20,17 @@ const partners = [
 ];
 
 const vendors = [
-  { name: 'TP Link' },
-  { name: 'Ruijie' },
-  { name: 'Cudy' },
-  { name: 'Grandstream' },
-  { name: 'Mikrotik' },
-  { name: 'Tarana' },
-  { name: 'Intracomm' },
-  { name: 'Huawei' },
-  { name: 'Ekahau' },
-  { name: 'Ericsson' },
-  { name: 'Rugged phones' },
+  { name: 'TP Link', logo: '/tplink_Logo.png' },
+  { name: 'Ruijie', logo: '/ruijie-logo.png' },
+  { name: 'Cudy', logo: '/cudy-logo.png' },
+  { name: 'Grandstream', logo: '/grandstream-logo.png' },
+  { name: 'Mikrotik', logo: '/mikrotik-Logo.png' },
+  { name: 'Tarana', logo: '/tarana-logo.png' },
+  { name: 'Intracomm', logo: '/intracomm-logo.png' },
+  { name: 'Huawei', logo: '/huawei-logo.png' },
+  { name: 'Ekahau', logo: '/ekahau-logo.png' },
+  { name: 'Ericsson', logo: '/ericsson-logo.png' },
+  { name: 'Rugged phones', logo: '/rugged-phones-logo.png' },
 ];
 
 export default function Partners() {
@@ -80,9 +80,15 @@ export default function Partners() {
           {vendors.map((vendor, index) => (
             <div 
               key={index}
-              className="flex items-center justify-center bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
+              className="flex items-center justify-center bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 h-32"
             >
-              <h3 className="text-sm font-semibold text-gray-800 text-center">{vendor.name}</h3>
+              <div className="relative w-full h-16 flex items-center justify-center">
+                <img
+                  src={vendor.logo}
+                  alt={`${vendor.name} Logo`}
+                  className="object-contain p-2 max-h-12"
+                />
+              </div>
             </div>
           ))}
         </div>

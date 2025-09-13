@@ -39,7 +39,7 @@ const plans = [
   },
   {
     name: "Microwave",
-    price: "Starting from R599",
+    price: "Starting from R350",
     speed: "Up to 500 Mbps",
     icon: Satellite,
     popular: false,

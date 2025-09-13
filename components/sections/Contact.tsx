@@ -32,10 +32,6 @@ export default function Contact() {
                   <h4 className="text-base font-semibold text-gray-900 mb-1">Phone</h4>
                   <div className="space-y-1">
                     <div>
-                      <p className="text-gray-600 text-sm">(+27) 68 618 5224</p>
-                      <p className="text-gray-500 text-xs">Office Number - Available 24/7</p>
-                    </div>
-                    <div>
                       <p className="text-gray-600 text-sm">(+27) 73 489 8331</p>
                       <p className="text-gray-500 text-xs">WhatsApp Number - Instant Support</p>
                     </div>
