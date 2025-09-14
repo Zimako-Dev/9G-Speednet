@@ -3,6 +3,16 @@
 import { Phone, Mail, MapPin, Clock, MessageCircle, Headphones } from 'lucide-react';
 
 export default function Contact() {
+  const handleWhatsAppClick = () => {
+    // WhatsApp number in international format without + or spaces
+    const phoneNumber = '27734898331';
+    const message = 'Hello, I would like to inquire about your services.';
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
     <section id="contact" className="py-12 px-6 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
@@ -85,7 +95,10 @@ export default function Contact() {
 
             {/* Quick Actions */}
             <div className="mt-6 space-y-2">
-              <button className="w-full bg-primary-500 text-white py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center">
+              <button 
+                onClick={handleWhatsAppClick}
+                className="w-full bg-primary-500 text-white py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center"
+              >
                 <MessageCircle className="w-3 h-3 mr-2" />
                 Start Live Chat
               </button>
