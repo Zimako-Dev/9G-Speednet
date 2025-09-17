@@ -182,6 +182,7 @@ export default function CartSidebar() {
                   {user ? (
                     <Link
                       href="/checkout"
+                      onClick={closeCart}
                       className="w-full bg-primary-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-600 transition-colors flex items-center justify-center"
                     >
                       <CreditCard className="w-4 h-4 mr-2" />

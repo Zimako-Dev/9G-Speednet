@@ -55,12 +55,6 @@ export default function ShippingForm({ shippingInfo, setShippingInfo, onNext }: 
     onNext();
   };
 
-  // Update parent state when form values change
-  const watchedValues = watch();
-  React.useEffect(() => {
-    setShippingInfo(watchedValues);
-  }, [watchedValues, setShippingInfo]);
-
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
       {/* Header */}

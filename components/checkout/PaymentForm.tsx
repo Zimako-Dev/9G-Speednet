@@ -67,12 +67,6 @@ export default function PaymentForm({
     onNext();
   };
 
-  // Update parent state when form values change
-  const watchedValues = watch();
-  React.useEffect(() => {
-    setPaymentInfo(watchedValues);
-  }, [watchedValues, setPaymentInfo]);
-
   // Handle same as shipping checkbox
   const handleSameAsShipping = (checked: boolean) => {
     setSameAsShipping(checked);
