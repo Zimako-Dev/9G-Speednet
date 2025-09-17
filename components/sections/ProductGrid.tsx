@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Star, ShoppingCart, Heart, Eye, Wifi, Zap, Shield } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
 
 interface Product {
   id: number;
@@ -21,6 +22,7 @@ interface Product {
 export default function ProductGrid() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [favorites, setFavorites] = useState<number[]>([]);
+  const { addItem, openCart } = useCart();
 
   const products: Product[] = [
     {
@@ -138,6 +140,18 @@ export default function ProductGrid() {
         ? prev.filter(id => id !== productId)
         : [...prev, productId]
     );
+  };
+
+  const handleAddToCart = (product: Product) => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      image: product.image,
+      features: product.features,
+    });
+    openCart();
   };
 
   const renderStars = (rating: number) => {
@@ -293,6 +307,7 @@ export default function ProductGrid() {
 
                 {/* Add to Cart Button */}
                 <button
+                  onClick={() => handleAddToCart(product)}
                   disabled={!product.inStock}
                   className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
                     product.inStock

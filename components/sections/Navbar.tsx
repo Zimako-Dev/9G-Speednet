@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { X } from 'lucide-react';
+import CartIcon from '@/components/ui/CartIcon';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -58,8 +59,9 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Button & Cart */}
+          <div className="hidden md:flex items-center space-x-3">
+            <CartIcon />
             <button 
               className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:from-primary-600 hover:to-primary-700 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg border border-primary-600"
               onClick={() => {
@@ -73,8 +75,9 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          {/* Mobile Menu Button & Cart */}
+          <div className="md:hidden flex items-center space-x-2">
+            <CartIcon />
             <button 
               onClick={toggleMobileMenu}
               className="text-gray-700 hover:text-primary-500 transition-colors duration-300 p-2 rounded-lg hover:bg-gray-100"
