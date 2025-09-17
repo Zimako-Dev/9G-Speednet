@@ -154,6 +154,11 @@ export default function ProductGrid() {
     openCart();
   };
 
+  // Consistent number formatting to avoid hydration issues
+  const formatPrice = (price: number) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  };
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -170,26 +175,26 @@ export default function ProductGrid() {
   };
 
   return (
-    <section id="products" className="py-20 bg-gray-50/50">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="products" className="py-12 sm:py-16 lg:py-20 bg-gray-50/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+        <div className="text-center mb-8 sm:mb-10 lg:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
             <span className="bg-gradient-to-r from-gray-900 to-primary-600 bg-clip-text text-transparent">
               Featured Products
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0">
             Discover our handpicked selection of premium networking equipment
           </p>
 
           {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 px-4 sm:px-0">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                className={`px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-full font-medium transition-all duration-300 text-xs sm:text-sm lg:text-base ${
                   selectedCategory === category
                     ? 'bg-primary-500 text-white shadow-lg'
                     : 'bg-white text-gray-600 hover:bg-primary-50 hover:text-primary-600 border border-gray-200'
@@ -202,7 +207,7 @@ export default function ProductGrid() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
@@ -255,31 +260,31 @@ export default function ProductGrid() {
               </div>
 
               {/* Product Info */}
-              <div className="p-6">
+              <div className="p-3 sm:p-4 lg:p-6">
                 {/* Brand & Name */}
-                <div className="mb-3">
-                  <p className="text-sm text-primary-600 font-medium mb-1">{product.brand}</p>
-                  <h3 className="text-lg font-bold text-gray-900 line-clamp-2 group-hover:text-primary-600 transition-colors duration-300">
+                <div className="mb-2 sm:mb-3">
+                  <p className="text-xs sm:text-sm text-primary-600 font-medium mb-1">{product.brand}</p>
+                  <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 line-clamp-2 group-hover:text-primary-600 transition-colors duration-300">
                     {product.name}
                   </h3>
                 </div>
 
                 {/* Rating */}
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
                   <div className="flex items-center">
                     {renderStars(product.rating)}
                   </div>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-xs sm:text-sm text-gray-600">
                     {product.rating} ({product.reviews})
                   </span>
                 </div>
 
                 {/* Features */}
-                <div className="flex flex-wrap gap-1 mb-4">
+                <div className="flex flex-wrap gap-1 mb-3 sm:mb-4">
                   {product.features.slice(0, 3).map((feature, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md"
+                      className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-gray-100 text-gray-600 text-xs rounded-md"
                     >
                       {feature}
                     </span>
@@ -287,20 +292,20 @@ export default function ProductGrid() {
                 </div>
 
                 {/* Price */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-gray-900">
-                      R{product.price.toLocaleString()}
+                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">
+                      R{formatPrice(product.price)}
                     </span>
                     {product.originalPrice && (
-                      <span className="text-sm text-gray-500 line-through">
-                        R{product.originalPrice.toLocaleString()}
+                      <span className="text-xs sm:text-sm text-gray-500 line-through">
+                        R{formatPrice(product.originalPrice)}
                       </span>
                     )}
                   </div>
                   {product.originalPrice && (
-                    <span className="bg-red-100 text-red-600 px-2 py-1 rounded-md text-xs font-semibold">
-                      Save R{(product.originalPrice - product.price).toLocaleString()}
+                    <span className="bg-red-100 text-red-600 px-2 py-1 rounded-md text-xs font-semibold self-start sm:self-auto">
+                      Save R{formatPrice(product.originalPrice - product.price)}
                     </span>
                   )}
                 </div>
@@ -309,13 +314,13 @@ export default function ProductGrid() {
                 <button
                   onClick={() => handleAddToCart(product)}
                   disabled={!product.inStock}
-                  className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
+                  className={`w-full py-2.5 sm:py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base ${
                     product.inStock
                       ? 'bg-primary-500 text-white hover:bg-primary-600 hover:scale-105 shadow-md hover:shadow-lg'
                       : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  <ShoppingCart className="w-4 h-4" />
+                  <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4" />
                   {product.inStock ? 'Add to Cart' : 'Out of Stock'}
                 </button>
               </div>
@@ -324,8 +329,8 @@ export default function ProductGrid() {
         </div>
 
         {/* Load More Button */}
-        <div className="text-center mt-12">
-          <button className="px-8 py-4 bg-white border-2 border-primary-500 text-primary-600 rounded-xl font-semibold hover:bg-primary-500 hover:text-white transition-all duration-300 hover:scale-105">
+        <div className="text-center mt-8 sm:mt-10 lg:mt-12 px-4 sm:px-0">
+          <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white border-2 border-primary-500 text-primary-600 rounded-xl font-semibold hover:bg-primary-500 hover:text-white transition-all duration-300 hover:scale-105 text-sm sm:text-base">
             Load More Products
           </button>
         </div>

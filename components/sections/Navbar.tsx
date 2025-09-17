@@ -2,11 +2,16 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, User } from 'lucide-react';
 import CartIcon from '@/components/ui/CartIcon';
+import { useAuth } from '@/contexts/AuthContext';
+import UserDropdown from '@/components/auth/UserDropdown';
+import AuthModal from '@/components/auth/AuthModal';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { user, loading } = useAuth();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -59,20 +64,38 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* CTA Button & Cart */}
+          {/* CTA Button & Cart & Auth */}
           <div className="hidden md:flex items-center space-x-3">
             <CartIcon />
-            <button 
-              className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:from-primary-600 hover:to-primary-700 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg border border-primary-600"
-              onClick={() => {
-                const servicesSection = document.getElementById('services');
-                if (servicesSection) {
-                  servicesSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-            >
-              Get Started
-            </button>
+            
+            {!loading && (
+              <>
+                {user ? (
+                  <UserDropdown />
+                ) : (
+                  <>
+                    <button
+                      onClick={() => setIsAuthModalOpen(true)}
+                      className="flex items-center px-4 py-2.5 text-gray-700 hover:text-primary-600 transition-colors font-medium text-sm"
+                    >
+                      <User className="w-4 h-4 mr-2" />
+                      Sign In
+                    </button>
+                    <button 
+                      className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:from-primary-600 hover:to-primary-700 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg border border-primary-600"
+                      onClick={() => {
+                        const servicesSection = document.getElementById('services');
+                        if (servicesSection) {
+                          servicesSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
+                    >
+                      Get Started
+                    </button>
+                  </>
+                )}
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button & Cart */}
@@ -141,23 +164,77 @@ export default function Navbar() {
             >
               Contact
             </a>
-            <div className="pt-4 border-t border-gray-200">
-              <button 
-                className="w-full bg-gradient-to-r from-primary-500 to-primary-600 text-white px-5 py-3 rounded-lg font-semibold text-sm hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-md"
-                onClick={() => {
-                  const servicesSection = document.getElementById('services');
-                  if (servicesSection) {
-                    servicesSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                  closeMobileMenu();
-                }}
-              >
-                Get Started
-              </button>
+
+            {/* Auth & Get Started Buttons */}
+            <div className="border-t border-gray-200 pt-4 mt-4 space-y-3">
+              {!loading && (
+                <>
+                  {user ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-3 px-2 py-2 bg-gray-50 rounded-lg">
+                        <div className="w-8 h-8 bg-primary-500 text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                          {(user.user_metadata?.full_name || user.email?.split('@')[0] || 'U').charAt(0).toUpperCase()}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'}
+                          </p>
+                          <p className="text-xs text-gray-500 truncate">
+                            {user.email}
+                          </p>
+                        </div>
+                      </div>
+                      <button 
+                        className="w-full bg-gradient-to-r from-primary-500 to-primary-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-300"
+                        onClick={() => {
+                          const servicesSection = document.getElementById('services');
+                          if (servicesSection) {
+                            servicesSection.scrollIntoView({ behavior: 'smooth' });
+                          }
+                          closeMobileMenu();
+                        }}
+                      >
+                        Get Started
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <button
+                        onClick={() => {
+                          setIsAuthModalOpen(true);
+                          closeMobileMenu();
+                        }}
+                        className="w-full flex items-center justify-center px-4 py-3 border-2 border-primary-500 text-primary-600 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
+                      >
+                        <User className="w-4 h-4 mr-2" />
+                        Sign In
+                      </button>
+                      <button 
+                        className="w-full bg-gradient-to-r from-primary-500 to-primary-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-300"
+                        onClick={() => {
+                          const servicesSection = document.getElementById('services');
+                          if (servicesSection) {
+                            servicesSection.scrollIntoView({ behavior: 'smooth' });
+                          }
+                          closeMobileMenu();
+                        }}
+                      >
+                        Get Started
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>
       )}
+
+      {/* Auth Modal */}
+      <AuthModal 
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </nav>
   );
 }
