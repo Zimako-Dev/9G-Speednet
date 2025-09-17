@@ -1,6 +1,6 @@
 import Navbar from '@/components/sections/Navbar';
 import MicrowaveHero from '@/components/sections/MicrowaveHero';
-import MicrowavePackages from '@/components/sections/MicrowavePackages';
+import MicrowavePackages from '@/components/sections/MicrowavePackagesUpdated';
 import MicrowaveTechnology from '@/components/sections/MicrowaveTechnology';
 import MicrowaveInstallation from '@/components/sections/MicrowaveInstallation';
 import Contact from '@/components/sections/Contact';

@@ -1,8 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, MessageCircle, Headphones } from 'lucide-react';
+import ScheduleCallForm from './ScheduleCallForm';
 
 export default function Contact() {
+  const [isScheduleCallOpen, setIsScheduleCallOpen] = useState(false);
   const handleWhatsAppClick = () => {
     // WhatsApp number in international format without + or spaces
     const phoneNumber = '27734898331';
@@ -102,7 +105,10 @@ export default function Contact() {
                 <MessageCircle className="w-3 h-3 mr-2" />
                 Start Live Chat
               </button>
-              <button className="w-full bg-white border-2 border-primary-500 text-primary-500 py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-primary-50 transition-all duration-300 flex items-center justify-center">
+              <button 
+                onClick={() => setIsScheduleCallOpen(true)}
+                className="w-full bg-white border-2 border-primary-500 text-primary-500 py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-primary-50 transition-all duration-300 flex items-center justify-center"
+              >
                 <Headphones className="w-3 h-3 mr-2" />
                 Schedule a Call
               </button>
@@ -194,6 +200,12 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      {/* Schedule Call Form Modal */}
+      <ScheduleCallForm 
+        isOpen={isScheduleCallOpen}
+        onClose={() => setIsScheduleCallOpen(false)}
+      />
     </section>
   );
 }

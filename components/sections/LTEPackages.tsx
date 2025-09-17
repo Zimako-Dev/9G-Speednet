@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Check, Radio, Zap, Crown, Wifi, Download } from 'lucide-react';
+import PackageOrderForm from './PackageOrderForm';
 
 const ltePackages = [
   {
@@ -81,6 +82,23 @@ const ltePackages = [
 
 export default function LTEPackages() {
   const [hoveredPackage, setHoveredPackage] = useState<number | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<{
+    name: string;
+    price: number;
+    data: string;
+    speed: string;
+  } | null>(null);
+
+  const handleChoosePackage = (pkg: typeof ltePackages[0]) => {
+    setSelectedPackage({
+      name: pkg.name,
+      price: pkg.price,
+      data: pkg.data,
+      speed: pkg.speed,
+    });
+    setIsFormOpen(true);
+  };
 
   return (
     <section id="lte-packages" className="py-16 px-6 bg-white">
@@ -160,11 +178,14 @@ export default function LTEPackages() {
                   </ul>
 
                   {/* CTA Button */}
-                  <button className={`w-full py-2.5 rounded-2xl font-semibold text-sm transition-all duration-300 ${
-                    pkg.popular
-                      ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
-                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200 hover:border-primary-300'
-                  }`}>
+                  <button 
+                    onClick={() => handleChoosePackage(pkg)}
+                    className={`w-full py-2.5 rounded-2xl font-semibold text-sm transition-all duration-300 ${
+                      pkg.popular
+                        ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
+                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200 hover:border-primary-300'
+                    }`}
+                  >
                     Choose Package
                   </button>
                 </div>
@@ -185,6 +206,13 @@ export default function LTEPackages() {
           </button>
         </div>
       </div>
+
+      {/* Package Order Form Modal */}
+      <PackageOrderForm
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        selectedPackage={selectedPackage}
+      />
     </section>
   );
 }

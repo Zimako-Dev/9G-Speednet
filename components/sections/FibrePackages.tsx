@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Check, Zap, Crown, Wifi, Download, Upload, Users, Building } from 'lucide-react';
+import FibreOrderForm from './FibreOrderForm';
 
 const fibrePackages = [
   {
@@ -132,6 +133,25 @@ const fibrePackages = [
 export default function FibrePackages() {
   const [hoveredPackage, setHoveredPackage] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<{
+    name: string;
+    price: number;
+    downloadSpeed: string;
+    uploadSpeed: string;
+    category: string;
+  } | null>(null);
+
+  const handleChoosePackage = (pkg: typeof fibrePackages[0]) => {
+    setSelectedPackage({
+      name: pkg.name,
+      price: pkg.price,
+      downloadSpeed: pkg.downloadSpeed,
+      uploadSpeed: pkg.uploadSpeed,
+      category: pkg.category,
+    });
+    setIsFormOpen(true);
+  };
 
   const categories = ["All", "Residential", "Business", "Enterprise"];
   
@@ -247,11 +267,14 @@ export default function FibrePackages() {
                   </ul>
 
                   {/* CTA Button */}
-                  <button className={`w-full py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 ${
-                    pkg.popular
-                      ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
-                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200 hover:border-primary-300'
-                  }`}>
+                  <button 
+                    onClick={() => handleChoosePackage(pkg)}
+                    className={`w-full py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 ${
+                      pkg.popular
+                        ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
+                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200 hover:border-primary-300'
+                    }`}
+                  >
                     Choose Package
                   </button>
                 </div>
@@ -272,6 +295,13 @@ export default function FibrePackages() {
           </button>
         </div>
       </div>
+
+      {/* Fibre Order Form Modal */}
+      <FibreOrderForm
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        selectedPackage={selectedPackage}
+      />
     </section>
   );
 }

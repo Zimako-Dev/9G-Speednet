@@ -230,6 +230,7 @@ export default function MicrowavePackages() {
 
                   {/* CTA Button */}
                   <button
+                    onClick={() => handleGetQuote(pkg, 'home')}
                     className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
                       pkg.popular
                         ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
@@ -325,6 +326,7 @@ export default function MicrowavePackages() {
 
                   {/* CTA Button */}
                   <button
+                    onClick={() => handleGetQuote(pkg, 'business')}
                     className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
                       pkg.popular
                         ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-lg hover:shadow-xl'
@@ -394,6 +396,13 @@ export default function MicrowavePackages() {
           </div>
         </div>
       </div>
+
+      {/* Microwave Quote Form Modal */}
+      <MicrowaveQuoteForm
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        selectedPackage={selectedPackage}
+      />
     </section>
   );
 }
