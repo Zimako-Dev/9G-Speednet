@@ -228,6 +228,7 @@ export default function CartSidebar() {
       <AuthModal 
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
+        position="checkout"
       />
     </>
   );

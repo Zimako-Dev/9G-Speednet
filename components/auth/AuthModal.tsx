@@ -28,10 +28,11 @@ type SignupFormData = z.infer<typeof signupSchema>;
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  position?: 'default' | 'checkout';
   initialMode?: 'login' | 'signup';
 }
 
-export default function AuthModal({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) {
+export default function AuthModal({ isOpen, onClose, position = 'default', initialMode = 'login' }: AuthModalProps) {
   const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>(initialMode);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -138,9 +139,16 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }: Au
     setMode(newMode);
   };
 
+  const getModalStyle = () => {
+    if (position === 'checkout') {
+      return { marginTop: '4rem' }; // Centered position for checkout
+    }
+    return { marginTop: '35rem' }; // Default position
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60] p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-y-auto" style={{ marginTop: '35rem' }}>
+      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-y-auto" style={getModalStyle()}>
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div>
