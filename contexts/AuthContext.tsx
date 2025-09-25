@@ -64,10 +64,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error, data } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
+      
+      // Check if user is admin and redirect accordingly
+      if (!error && data.user) {
+        const MOCK_ADMIN_USERS: Record<string, boolean> = {
+          'admin@9gspeednet.com': true,
+          'manager@9gspeednet.com': true,
+          'staff@9gspeednet.com': true,
+        };
+        
+        const isAdmin = MOCK_ADMIN_USERS[data.user.email || ''] || false;
+        
+        if (isAdmin) {
+          // Redirect to admin dashboard after successful login
+          setTimeout(() => {
+            window.location.href = '/admin';
+          }, 1000);
+        }
+      }
+      
       return { error };
     } catch (error) {
       return { error: error as AuthError };

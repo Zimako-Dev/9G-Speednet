@@ -1,5 +1,6 @@
 import Navbar from '@/components/sections/Navbar';
 import Hero from '@/components/sections/Hero';
+import AvailabilityChecker from '@/components/sections/AvailabilityChecker';
 import Services from '@/components/sections/Services';
 import Features from '@/components/sections/Features';
 import Testimonials from '@/components/sections/Testimonials';
@@ -14,6 +15,7 @@ export default function Home() {
       <Navbar />
       <main className="min-h-screen">
         <Hero />
+        <AvailabilityChecker />
         <Services />
         <Features />
         <Partners />

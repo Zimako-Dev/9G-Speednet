@@ -13,22 +13,22 @@ const config: Config = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: '#FF69B4', // Hot Pink
-          50: '#FFF0F8',
-          100: '#FFE1F1',
-          200: '#FFC2E3',
-          300: '#FFA3D5',
-          400: '#FF84C7',
-          500: '#FF69B4', // Main brand color
-          600: '#E555A0',
-          700: '#CC418C',
-          800: '#B32D78',
-          900: '#991964',
+          DEFAULT: '#E91E63', // Deeper pink for better contrast
+          50: '#FCE4EC',
+          100: '#F8BBD9',
+          200: '#F48FB1',
+          300: '#F06292',
+          400: '#EC407A',
+          500: '#E91E63', // Main brand color - better contrast
+          600: '#D81B60',
+          700: '#C2185B',
+          800: '#AD1457',
+          900: '#880E4F',
         },
         accent: {
-          green: '#10B981',
-          blue: '#3B82F6',
-          purple: '#8B5CF6',
+          green: '#059669', // Darker green for better contrast
+          blue: '#2563EB', // Darker blue for better contrast
+          purple: '#7C3AED', // Darker purple for better contrast
         },
         card: {
           DEFAULT: 'hsl(var(--card))',

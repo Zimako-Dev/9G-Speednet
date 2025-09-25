@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Star, ShoppingCart, Heart, Eye, Wifi, Zap, Shield } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
+import Link from 'next/link';
 
 interface Product {
   id: number;
@@ -33,7 +34,7 @@ export default function ProductGrid() {
       originalPrice: 4999,
       rating: 4.8,
       reviews: 124,
-      image: '/api/placeholder/300/300',
+      image: 'https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=300&h=300&fit=crop&crop=center',
       category: 'Routers',
       features: ['WiFi 6', '6000 Mbps', 'Gaming Mode', '8 Antennas'],
       badge: 'Best Seller',
@@ -46,7 +47,7 @@ export default function ProductGrid() {
       price: 3599,
       rating: 4.7,
       reviews: 89,
-      image: '/api/placeholder/300/300',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop&crop=center',
       category: 'Extenders',
       features: ['Mesh Network', '5400 Mbps', '3-Pack', 'Easy Setup'],
       inStock: true,
@@ -58,7 +59,7 @@ export default function ProductGrid() {
       price: 8999,
       rating: 4.9,
       reviews: 45,
-      image: '/api/placeholder/300/300',
+      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=300&h=300&fit=crop&crop=center',
       category: 'Security',
       features: ['Advanced Threat Protection', 'VPN Support', 'High Throughput'],
       badge: 'Professional',
@@ -72,7 +73,7 @@ export default function ProductGrid() {
       originalPrice: 2299,
       rating: 4.6,
       reviews: 156,
-      image: '/api/placeholder/300/300',
+      image: 'https://images.unsplash.com/photo-1551808525-51a94da548ce?w=300&h=300&fit=crop&crop=center',
       category: 'Extenders',
       features: ['WiFi 6E', '3000 Mbps', 'OneMesh', 'Gigabit Port'],
       inStock: true,
@@ -84,7 +85,7 @@ export default function ProductGrid() {
       price: 2799,
       rating: 4.5,
       reviews: 78,
-      image: '/api/placeholder/300/300',
+      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center',
       category: 'Power',
       features: ['1500VA/900W', 'LCD Display', '8 Outlets', 'USB Monitoring'],
       inStock: true,
@@ -96,7 +97,7 @@ export default function ProductGrid() {
       price: 1599,
       rating: 4.8,
       reviews: 92,
-      image: '/api/placeholder/300/300',
+      image: 'https://images.unsplash.com/photo-1629654297299-3965bc8e3e35?w=300&h=300&fit=crop&crop=center',
       category: 'Accessories',
       features: ['24 Ports', 'Gigabit Speed', 'Managed', 'PoE+'],
       inStock: false,
@@ -108,7 +109,7 @@ export default function ProductGrid() {
       price: 5499,
       rating: 4.9,
       reviews: 67,
-      image: '/api/placeholder/300/300',
+      image: 'https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=300&h=300&fit=crop&crop=center',
       category: 'Routers',
       features: ['WiFi 6', 'Enterprise Grade', 'Cloud Management', 'High Capacity'],
       badge: 'New',
@@ -121,7 +122,7 @@ export default function ProductGrid() {
       price: 3299,
       rating: 4.4,
       reviews: 134,
-      image: '/api/placeholder/300/300',
+      image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=300&h=300&fit=crop&crop=center',
       category: 'Boosters',
       features: ['Multi-Carrier', '65dB Gain', 'Indoor/Outdoor', 'Easy Install'],
       inStock: true,
@@ -218,6 +219,8 @@ export default function ProductGrid() {
                 <img
                   src={product.image}
                   alt={product.name}
+                  width={300}
+                  height={300}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 
@@ -253,9 +256,12 @@ export default function ProductGrid() {
                   >
                     <Heart className="w-4 h-4" />
                   </button>
-                  <button className="p-2 bg-white/80 text-gray-600 rounded-full backdrop-blur-sm hover:bg-primary-500 hover:text-white transition-colors duration-300">
+                  <Link
+                    href={`/store/product/${product.id}`}
+                    className="p-2 bg-white/80 text-gray-600 rounded-full backdrop-blur-sm hover:bg-primary-500 hover:text-white transition-colors duration-300"
+                  >
                     <Eye className="w-4 h-4" />
-                  </button>
+                  </Link>
                 </div>
               </div>
 
@@ -264,9 +270,11 @@ export default function ProductGrid() {
                 {/* Brand & Name */}
                 <div className="mb-2 sm:mb-3">
                   <p className="text-xs sm:text-sm text-primary-600 font-medium mb-1">{product.brand}</p>
-                  <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 line-clamp-2 group-hover:text-primary-600 transition-colors duration-300">
-                    {product.name}
-                  </h3>
+                  <Link href={`/store/product/${product.id}`}>
+                    <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 line-clamp-2 hover:text-primary-600 transition-colors duration-300 cursor-pointer">
+                      {product.name}
+                    </h3>
+                  </Link>
                 </div>
 
                 {/* Rating */}

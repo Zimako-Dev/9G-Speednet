@@ -4,18 +4,22 @@ const partners = [
   {
     name: 'Vumatel',
     logo: '/vuma-logo.png',
+    url: 'https://vumatel.co.za',
   },
   {
     name: 'Octotel',
     logo: '/octotel-logo.png',
+    url: 'https://octotel.co.za',
   },
   {
     name: 'Openserve',
     logo: '/openserve-logo.png',
+    url: 'https://openserve.co.za',
   },
   {
     name: 'Metrofibre',
     logo: '/metrofribre-logo.png',
+    url: 'https://metrofibre.co.za',
   },
 ];
 
@@ -50,18 +54,23 @@ export default function Partners() {
         {/* Partners Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center mb-16">
           {partners.map((partner, index) => (
-            <div 
+            <a
               key={index}
-              className="flex items-center justify-center bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 w-full h-32"
+              href={partner.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 w-full h-32 hover:scale-105 cursor-pointer"
             >
               <div className="relative w-full h-16 flex items-center justify-center">
                 <img
                   src={partner.logo}
                   alt={`${partner.name} Logo`}
-                  className="object-contain p-2 max-h-12"
+                  width={120}
+                  height={60}
+                  className="object-contain max-w-full max-h-full"
                 />
               </div>
-            </div>
+            </a>
           ))}
         </div>
 
@@ -80,13 +89,15 @@ export default function Partners() {
           {vendors.map((vendor, index) => (
             <div 
               key={index}
-              className="flex items-center justify-center bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 h-32"
+              className="flex items-center justify-center bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 h-32 hover:scale-105"
             >
               <div className="relative w-full h-16 flex items-center justify-center">
                 <img
                   src={vendor.logo}
                   alt={`${vendor.name} Logo`}
-                  className="object-contain p-2 max-h-12"
+                  width={80}
+                  height={40}
+                  className="object-contain max-w-full max-h-full"
                 />
               </div>
             </div>
