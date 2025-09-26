@@ -274,11 +274,12 @@ export async function generateStaticParams() {
 }
 
 interface ProductPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const productId = parseInt(params.id);
+export default async function ProductPage({ params }: ProductPageProps) {
+  const resolvedParams = await params;
+  const productId = parseInt(resolvedParams.id);
   const product = getProductById(productId);
 
   if (!product) {
