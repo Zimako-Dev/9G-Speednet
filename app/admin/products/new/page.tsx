@@ -61,7 +61,7 @@ export default function NewProductPage() {
 
   const { fields: featureFields, append: appendFeature, remove: removeFeature } = useFieldArray({
     control: form.control,
-    name: 'features',
+    name: 'features' as any,
   });
 
   const { fields: specFields, append: appendSpec, remove: removeSpec } = useFieldArray({
@@ -71,7 +71,7 @@ export default function NewProductPage() {
 
   const { fields: imageFields, append: appendImage, remove: removeImage } = useFieldArray({
     control: form.control,
-    name: 'images',
+    name: 'images' as any,
   });
 
   const onSubmit = async (data: ProductFormData) => {
