@@ -24,13 +24,16 @@ export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
-  const [showDeleteModal, setShowDeleteModal] = useState<number | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState<string | number | null>(null);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
   const [deleting, setDeleting] = useState(false);
   
   const { permissions } = useAdmin();
 
   useEffect(() => {
     fetchProducts();
+    fetchFilters();
   }, []);
 
   useEffect(() => {
@@ -45,6 +48,19 @@ export default function ProductsPage() {
       console.error('Error fetching products:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFilters = async () => {
+    try {
+      const [categoriesData, brandsData] = await Promise.all([
+        ProductService.getProductCategories(),
+        ProductService.getProductBrands()
+      ]);
+      setCategories(categoriesData);
+      setBrands(brandsData);
+    } catch (error) {
+      console.error('Error fetching filters:', error);
     }
   };
 
@@ -72,10 +88,10 @@ export default function ProductsPage() {
     setFilteredProducts(filtered);
   };
 
-  const handleDeleteProduct = async (id: number) => {
+  const handleDeleteProduct = async (id: string | number) => {
     setDeleting(true);
     try {
-      await ProductService.deleteProduct(id);
+      await ProductService.deleteProduct(id.toString());
       setProducts(products.filter(p => p.id !== id));
       setShowDeleteModal(null);
     } catch (error) {
@@ -93,8 +109,7 @@ export default function ProductsPage() {
     }).format(amount);
   };
 
-  const categories = ProductService.getProductCategories();
-  const brands = ProductService.getProductBrands();
+  // Categories and brands are now fetched asynchronously in useEffect
 
   if (loading) {
     return (

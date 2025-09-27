@@ -12,17 +12,22 @@ import {
   Settings, 
   ChevronLeft,
   ChevronRight,
-  Zap
+  Zap,
+  TestTube
 } from 'lucide-react';
 import { useAdmin } from '@/contexts/AdminContext';
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard, permission: null },
-  { name: 'Products', href: '/admin/products', icon: Package, permission: 'canViewProducts' },
+  { name: 'Products', href: '/admin/products', icon: Package, permission: 'canCreateProducts' },
   { name: 'Users', href: '/admin/users', icon: Users, permission: 'canViewUsers' },
   { name: 'Orders', href: '/admin/orders', icon: ShoppingCart, permission: 'canViewOrders' },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3, permission: 'canViewAnalytics' },
   { name: 'Settings', href: '/admin/settings', icon: Settings, permission: 'canManageSettings' },
+  // Development only - remove in production
+  ...(process.env.NODE_ENV === 'development' ? [
+    { name: 'Test Setup', href: '/admin/test', icon: TestTube, permission: null },
+  ] : []),
 ];
 
 export default function AdminSidebar() {
@@ -42,7 +47,7 @@ export default function AdminSidebar() {
       
       {/* Sidebar */}
       <div className={`fixed inset-y-0 left-0 z-50 bg-white shadow-lg border-r border-gray-200 transition-all duration-300 ${
-        collapsed ? 'w-16' : 'w-64'
+        collapsed ? 'w-16' : 'w-56'
       } lg:translate-x-0`}>
         
         {/* Logo and collapse button */}

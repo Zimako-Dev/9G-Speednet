@@ -9,6 +9,7 @@ const MOCK_ADMIN_USERS: Record<string, boolean> = {
   'admin@9gspeednet.com': true,
   'manager@9gspeednet.com': true,
   'staff@9gspeednet.com': true,
+  'admin@9gspeed.co.za': true, // Your admin account
 };
 
 export function useAuthRedirect() {

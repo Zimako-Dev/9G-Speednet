@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -41,6 +41,8 @@ export default function NewProductPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -107,8 +109,22 @@ export default function NewProductPage() {
     }
   };
 
-  const categories = ProductService.getProductCategories();
-  const brands = ProductService.getProductBrands();
+  useEffect(() => {
+    const fetchFilters = async () => {
+      try {
+        const [categoriesData, brandsData] = await Promise.all([
+          ProductService.getProductCategories(),
+          ProductService.getProductBrands()
+        ]);
+        setCategories(categoriesData);
+        setBrands(brandsData);
+      } catch (error) {
+        console.error('Error fetching filters:', error);
+      }
+    };
+    
+    fetchFilters();
+  }, []);
 
   return (
     <div>

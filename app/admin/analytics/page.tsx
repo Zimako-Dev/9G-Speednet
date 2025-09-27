@@ -8,39 +8,224 @@ import {
   Users, 
   Package 
 } from 'lucide-react';
-import { 
-  LineChart, 
-  Line, 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell
-} from 'recharts';
+import dynamic from 'next/dynamic';
+
+// Dynamically import ApexCharts to avoid SSR issues
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function AnalyticsPage() {
-  // Mock data for charts
-  const salesData = [
-    { month: 'Jan', sales: 45000, orders: 120 },
-    { month: 'Feb', sales: 52000, orders: 140 },
-    { month: 'Mar', sales: 48000, orders: 130 },
-    { month: 'Apr', sales: 61000, orders: 165 },
-    { month: 'May', sales: 55000, orders: 150 },
-    { month: 'Jun', sales: 67000, orders: 180 },
+  // Sales Trend Chart Configuration
+  const salesTrendOptions = {
+    chart: {
+      type: 'area' as const,
+      height: 320,
+      toolbar: {
+        show: false,
+      },
+      zoom: {
+        enabled: false,
+      },
+    },
+    colors: ['#FF69B4', '#10B981'],
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: 'smooth' as const,
+      width: 3,
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.4,
+        opacityTo: 0.1,
+        stops: [0, 90, 100],
+      },
+    },
+    grid: {
+      borderColor: '#f1f5f9',
+      strokeDashArray: 3,
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        style: {
+          colors: '#64748b',
+          fontSize: '12px',
+        },
+      },
+    },
+    yaxis: [
+      {
+        title: {
+          text: 'Revenue (ZAR)',
+          style: {
+            color: '#64748b',
+            fontSize: '12px',
+          },
+        },
+        labels: {
+          style: {
+            colors: '#64748b',
+            fontSize: '12px',
+          },
+          formatter: (value: number) => `R${(value / 1000).toFixed(0)}k`,
+        },
+      },
+      {
+        opposite: true,
+        title: {
+          text: 'Orders',
+          style: {
+            color: '#64748b',
+            fontSize: '12px',
+          },
+        },
+        labels: {
+          style: {
+            colors: '#64748b',
+            fontSize: '12px',
+          },
+        },
+      },
+    ],
+    tooltip: {
+      shared: true,
+      intersect: false,
+      y: [
+        {
+          formatter: (value: number) => `R${value.toLocaleString()}`,
+        },
+        {
+          formatter: (value: number) => `${value} orders`,
+        },
+      ],
+    },
+    legend: {
+      position: 'top' as const,
+      horizontalAlign: 'right' as const,
+      fontSize: '12px',
+      markers: {
+        size: 6,
+        strokeWidth: 0,
+      },
+    },
+  };
+
+  const salesTrendSeries = [
+    {
+      name: 'Revenue',
+      type: 'area',
+      data: [45000, 52000, 48000, 61000, 55000, 67000],
+    },
+    {
+      name: 'Orders',
+      type: 'line',
+      data: [120, 140, 130, 165, 150, 180],
+    },
   ];
 
-  const categoryData = [
-    { name: 'Routers', value: 35, color: '#FF69B4' },
-    { name: 'Extenders', value: 25, color: '#10B981' },
-    { name: 'Security', value: 20, color: '#3B82F6' },
-    { name: 'Power', value: 12, color: '#8B5CF6' },
-    { name: 'Accessories', value: 8, color: '#F59E0B' },
-  ];
+  // Sales by Category Chart Configuration
+  const categoryOptions = {
+    chart: {
+      type: 'donut' as const,
+      height: 320,
+    },
+    colors: ['#FF69B4', '#10B981', '#3B82F6', '#8B5CF6', '#F59E0B'],
+    labels: ['Routers', 'Extenders', 'Security', 'Power', 'Accessories'],
+    dataLabels: {
+      enabled: true,
+      formatter: (val: number) => `${val.toFixed(1)}%`,
+      style: {
+        fontSize: '12px',
+        fontWeight: 600,
+        colors: ['#fff'],
+      },
+      dropShadow: {
+        enabled: true,
+        top: 1,
+        left: 1,
+        blur: 1,
+        color: '#000',
+        opacity: 0.45,
+      },
+    },
+    stroke: {
+      width: 2,
+      colors: ['#fff'],
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: '60%',
+          labels: {
+            show: true,
+            name: {
+              show: true,
+              fontSize: '16px',
+              fontWeight: 600,
+              color: '#374151',
+            },
+            value: {
+              show: true,
+              fontSize: '24px',
+              fontWeight: 700,
+              color: '#111827',
+              formatter: (val: string) => `${val}%`,
+            },
+            total: {
+              show: true,
+              showAlways: true,
+              label: 'Total Sales',
+              fontSize: '14px',
+              fontWeight: 400,
+              color: '#6b7280',
+              formatter: () => '100%',
+            },
+          },
+        },
+      },
+    },
+    legend: {
+      position: 'bottom' as const,
+      fontSize: '12px',
+      markers: {
+        size: 6,
+        strokeWidth: 0,
+      },
+      itemMargin: {
+        horizontal: 10,
+        vertical: 5,
+      },
+    },
+    tooltip: {
+      y: {
+        formatter: (val: number) => `${val}%`,
+      },
+    },
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          chart: {
+            height: 280,
+          },
+          legend: {
+            position: 'bottom' as const,
+          },
+        },
+      },
+    ],
+  };
+
+  const categorySeries = [35, 25, 20, 12, 8];
 
   const topProducts = [
     { name: 'AX6000 Pro Gaming Router', sales: 124, revenue: 532596 },
@@ -61,16 +246,25 @@ export default function AnalyticsPage() {
   return (
     <div>
       {/* Page header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
-        <p className="mt-2 text-gray-600">
-          Track your business performance and insights
-        </p>
+      <div className="bg-gradient-to-r from-primary-500 to-accent-purple rounded-xl shadow-sm p-6 text-white mb-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">Analytics</h1>
+            <p className="mt-2 text-primary-100">
+              Track your business performance and insights
+            </p>
+          </div>
+          <div className="hidden md:block">
+            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+              <BarChart3 className="w-8 h-8 text-white" />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Key metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-accent-purple rounded-lg flex items-center justify-center">
               <DollarSign className="w-6 h-6 text-white" />
@@ -86,7 +280,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-gradient-to-r from-accent-green to-accent-blue rounded-lg flex items-center justify-center">
               <ShoppingCart className="w-6 h-6 text-white" />
@@ -102,7 +296,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-gradient-to-r from-accent-blue to-accent-purple rounded-lg flex items-center justify-center">
               <Users className="w-6 h-6 text-white" />
@@ -118,7 +312,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-gradient-to-r from-accent-purple to-primary-500 rounded-lg flex items-center justify-center">
               <Package className="w-6 h-6 text-white" />
@@ -139,64 +333,50 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         
         {/* Sales trend */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-shadow duration-300">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-medium text-gray-900">Sales Trend</h3>
-            <select className="text-sm border border-gray-300 rounded-lg px-3 py-1">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Sales Trend</h3>
+              <p className="text-sm text-gray-500 mt-1">Revenue and orders over time</p>
+            </div>
+            <select className="text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
               <option>Last 6 months</option>
               <option>Last year</option>
             </select>
           </div>
           <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={salesData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip formatter={(value, name) => [
-                  name === 'sales' ? formatCurrency(Number(value)) : value,
-                  name === 'sales' ? 'Sales' : 'Orders'
-                ]} />
-                <Line 
-                  type="monotone" 
-                  dataKey="sales" 
-                  stroke="#FF69B4" 
-                  strokeWidth={3}
-                  dot={{ fill: '#FF69B4', strokeWidth: 2, r: 4 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <Chart
+              options={salesTrendOptions}
+              series={salesTrendSeries}
+              type="area"
+              height={320}
+            />
           </div>
         </div>
 
         {/* Category distribution */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-lg font-medium text-gray-900 mb-6">Sales by Category</h3>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-900">Sales by Category</h3>
+            <p className="text-sm text-gray-500 mt-1">Product category distribution</p>
+          </div>
           <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={categoryData}
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={100}
-                  dataKey="value"
-                  label={({ name, value }) => `${name}: ${value}%`}
-                >
-                  {categoryData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+            <Chart
+              options={categoryOptions}
+              series={categorySeries}
+              type="donut"
+              height={320}
+            />
           </div>
         </div>
       </div>
 
       {/* Top products */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-medium text-gray-900 mb-6">Top Performing Products</h3>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300">
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-900">Top Performing Products</h3>
+          <p className="text-sm text-gray-500 mt-1">Best selling products by revenue</p>
+        </div>
         <div className="overflow-x-auto">
           <table className="min-w-full">
             <thead>

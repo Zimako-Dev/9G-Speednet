@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { X, Mail, Lock, User, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -25,6 +26,14 @@ const signupSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 type SignupFormData = z.infer<typeof signupSchema>;
 
+// Admin users that get redirected to /admin
+const ADMIN_EMAILS = [
+  'admin@9gspeednet.com',
+  'manager@9gspeednet.com', 
+  'staff@9gspeednet.com',
+  'admin@9gspeed.co.za', // Your admin account
+];
+
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -40,6 +49,7 @@ export default function AuthModal({ isOpen, onClose, position = 'default', initi
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const { signIn, signUp, resetPassword } = useAuth();
+  const router = useRouter();
 
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -66,11 +76,23 @@ export default function AuthModal({ isOpen, onClose, position = 'default', initi
     if (error) {
       setMessage({ type: 'error', text: error.message });
     } else {
-      setMessage({ type: 'success', text: 'Successfully signed in!' });
-      setTimeout(() => {
-        onClose();
-        loginForm.reset();
-      }, 1000);
+      // Check if user is admin and redirect accordingly
+      const isAdmin = ADMIN_EMAILS.includes(data.email.toLowerCase());
+      
+      if (isAdmin) {
+        setMessage({ type: 'success', text: 'Admin login successful! Redirecting to dashboard...' });
+        setTimeout(() => {
+          onClose();
+          loginForm.reset();
+          router.push('/admin');
+        }, 1000);
+      } else {
+        setMessage({ type: 'success', text: 'Successfully signed in!' });
+        setTimeout(() => {
+          onClose();
+          loginForm.reset();
+        }, 1000);
+      }
     }
 
     setIsLoading(false);

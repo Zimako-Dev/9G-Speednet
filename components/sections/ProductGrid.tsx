@@ -1,141 +1,83 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Star, ShoppingCart, Heart, Eye, Wifi, Zap, Shield } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
+import { ProductService } from '@/lib/productService';
+import { Product } from '@/types/admin';
 import Link from 'next/link';
 
-interface Product {
-  id: number;
-  name: string;
-  brand: string;
-  price: number;
-  originalPrice?: number;
-  rating: number;
-  reviews: number;
-  image: string;
-  category: string;
-  features: string[];
-  badge?: string;
-  inStock: boolean;
-}
+// Product interface is now imported from @/types/admin
 
 export default function ProductGrid() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const [favorites, setFavorites] = useState<(string | number)[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>(['All']);
+  const [loading, setLoading] = useState(true);
   const { addItem, openCart } = useCart();
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: 'AX6000 Pro Gaming Router',
-      brand: 'ASUS',
-      price: 4299,
-      originalPrice: 4999,
-      rating: 4.8,
-      reviews: 124,
-      image: 'https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=300&h=300&fit=crop&crop=center',
-      category: 'Routers',
-      features: ['WiFi 6', '6000 Mbps', 'Gaming Mode', '8 Antennas'],
-      badge: 'Best Seller',
-      inStock: true,
-    },
-    {
-      id: 2,
-      name: 'Mesh WiFi System Pro',
-      brand: 'Netgear',
-      price: 3599,
-      rating: 4.7,
-      reviews: 89,
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop&crop=center',
-      category: 'Extenders',
-      features: ['Mesh Network', '5400 Mbps', '3-Pack', 'Easy Setup'],
-      inStock: true,
-    },
-    {
-      id: 3,
-      name: 'Enterprise Firewall',
-      brand: 'SonicWall',
-      price: 8999,
-      rating: 4.9,
-      reviews: 45,
-      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=300&h=300&fit=crop&crop=center',
-      category: 'Security',
-      features: ['Advanced Threat Protection', 'VPN Support', 'High Throughput'],
-      badge: 'Professional',
-      inStock: true,
-    },
-    {
-      id: 4,
-      name: 'WiFi 6E Range Extender',
-      brand: 'TP-Link',
-      price: 1899,
-      originalPrice: 2299,
-      rating: 4.6,
-      reviews: 156,
-      image: 'https://images.unsplash.com/photo-1551808525-51a94da548ce?w=300&h=300&fit=crop&crop=center',
-      category: 'Extenders',
-      features: ['WiFi 6E', '3000 Mbps', 'OneMesh', 'Gigabit Port'],
-      inStock: true,
-    },
-    {
-      id: 5,
-      name: 'UPS Power Backup 1500VA',
-      brand: 'APC',
-      price: 2799,
-      rating: 4.5,
-      reviews: 78,
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center',
-      category: 'Power',
-      features: ['1500VA/900W', 'LCD Display', '8 Outlets', 'USB Monitoring'],
-      inStock: true,
-    },
-    {
-      id: 6,
-      name: 'Gigabit Ethernet Switch',
-      brand: 'Cisco',
-      price: 1599,
-      rating: 4.8,
-      reviews: 92,
-      image: 'https://images.unsplash.com/photo-1629654297299-3965bc8e3e35?w=300&h=300&fit=crop&crop=center',
-      category: 'Accessories',
-      features: ['24 Ports', 'Gigabit Speed', 'Managed', 'PoE+'],
-      inStock: false,
-    },
-    {
-      id: 7,
-      name: 'WiFi 6 Business Router',
-      brand: 'Ubiquiti',
-      price: 5499,
-      rating: 4.9,
-      reviews: 67,
-      image: 'https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=300&h=300&fit=crop&crop=center',
-      category: 'Routers',
-      features: ['WiFi 6', 'Enterprise Grade', 'Cloud Management', 'High Capacity'],
-      badge: 'New',
-      inStock: true,
-    },
-    {
-      id: 8,
-      name: 'Signal Booster Kit',
-      brand: 'WeBoost',
-      price: 3299,
-      rating: 4.4,
-      reviews: 134,
-      image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=300&h=300&fit=crop&crop=center',
-      category: 'Boosters',
-      features: ['Multi-Carrier', '65dB Gain', 'Indoor/Outdoor', 'Easy Install'],
-      inStock: true,
-    },
-  ];
+  // Fetch products and categories from Supabase
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsData, categoriesData] = await Promise.all([
+          ProductService.getAllProducts(),
+          ProductService.getProductCategories()
+        ]);
+        
+        setProducts(productsData);
+        setCategories(['All', ...categoriesData]);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchData();
+  }, []);
 
-  const categories = ['All', 'Routers', 'Extenders', 'Security', 'Power', 'Boosters', 'Accessories'];
+  // Show loading state while fetching products
+  if (loading) {
+    return (
+      <section id="products" className="py-12 sm:py-16 lg:py-20 bg-gray-50/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8 sm:mb-10 lg:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+              <span className="bg-gradient-to-r from-gray-900 to-primary-600 bg-clip-text text-transparent">
+                Featured Products
+              </span>
+            </h2>
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0">
+              Loading our premium networking equipment...
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden animate-pulse">
+                <div className="aspect-square bg-gray-200"></div>
+                <div className="p-4 space-y-3">
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-6 bg-gray-200 rounded w-full"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                  <div className="h-8 bg-gray-200 rounded w-full"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Categories are now fetched from Supabase
 
   const filteredProducts = selectedCategory === 'All' 
     ? products 
     : products.filter(product => product.category === selectedCategory);
 
-  const toggleFavorite = (productId: number) => {
+  const toggleFavorite = (productId: string | number) => {
     setFavorites(prev => 
       prev.includes(productId) 
         ? prev.filter(id => id !== productId)
@@ -145,11 +87,11 @@ export default function ProductGrid() {
 
   const handleAddToCart = (product: Product) => {
     addItem({
-      id: product.id,
+      id: Number(product.id),
       name: product.name,
       brand: product.brand,
       price: product.price,
-      image: product.image,
+      image: product.images?.[0] || '',
       features: product.features,
     });
     openCart();
@@ -217,7 +159,7 @@ export default function ProductGrid() {
               {/* Product Image */}
               <div className="relative aspect-square bg-gray-100 overflow-hidden">
                 <img
-                  src={product.image}
+                  src={product.images?.[0] || 'https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=300&h=300&fit=crop&crop=center'}
                   alt={product.name}
                   width={300}
                   height={300}

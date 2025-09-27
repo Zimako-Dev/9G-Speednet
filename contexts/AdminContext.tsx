@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
 import { AdminUser, UserRole, AdminPermissions, ROLE_PERMISSIONS } from '@/types/admin';
-import { supabase } from '@/lib/supabase';
+// Remove supabase import as it's not being used correctly
 
 interface AdminContextType {
   adminUser: AdminUser | null;
@@ -21,6 +21,7 @@ const MOCK_ADMIN_USERS: Record<string, UserRole> = {
   'admin@9gspeednet.com': 'super_admin',
   'manager@9gspeednet.com': 'admin',
   'staff@9gspeednet.com': 'admin',
+  'admin@9gspeed.co.za': 'super_admin', // Your admin account
 };
 
 export function AdminProvider({ children }: { children: ReactNode }) {

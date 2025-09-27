@@ -1,6 +1,34 @@
 import { Product, CreateProductData, UpdateProductData, DashboardStats } from '@/types/admin';
+import { createClient } from '@/lib/supabase/client';
+import { Database } from '@/types/supabase';
 
-// Mock product data - in production, this would interact with your database
+type DbProduct = Database['public']['Tables']['products']['Row'];
+type DbInsertProduct = Database['public']['Tables']['products']['Insert'];
+type DbUpdateProduct = Database['public']['Tables']['products']['Update'];
+
+// Helper function to convert database product to frontend product
+function convertDbProductToProduct(dbProduct: DbProduct): Product {
+  return {
+    id: dbProduct.id,
+    name: dbProduct.name,
+    brand: dbProduct.brand || '',
+    price: Number(dbProduct.price),
+    originalPrice: dbProduct.original_price ? Number(dbProduct.original_price) : undefined,
+    rating: 4.5, // TODO: Calculate from reviews
+    reviews: 0, // TODO: Count from reviews table
+    images: dbProduct.images || [],
+    category: dbProduct.category,
+    features: dbProduct.features || [],
+    specifications: dbProduct.specifications as Record<string, string> || {},
+    description: dbProduct.description || '',
+    badge: dbProduct.is_featured ? 'Featured' : '',
+    inStock: dbProduct.in_stock,
+    created_at: dbProduct.created_at,
+    updated_at: dbProduct.updated_at,
+  };
+}
+
+// Mock product data for fallback - will be removed once Supabase is fully integrated
 let mockProducts: Product[] = [
   {
     id: 1,
@@ -257,94 +285,317 @@ let mockProducts: Product[] = [
 let nextId = 9;
 
 export class ProductService {
+  private static supabase = createClient();
+
   static async getAllProducts(): Promise<Product[]> {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return [...mockProducts];
+    try {
+      const { data, error } = await this.supabase
+        .from('products')
+        .select('*')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching products:', error);
+        return [...mockProducts]; // Fallback to mock data
+      }
+
+      return data?.map(convertDbProductToProduct) || [];
+    } catch (error) {
+      console.error('Error in getAllProducts:', error);
+      return [...mockProducts]; // Fallback to mock data
+    }
   }
 
-  static async getProductById(id: number): Promise<Product | null> {
-    await new Promise(resolve => setTimeout(resolve, 200));
-    return mockProducts.find(p => p.id === id) || null;
+  static async getProductById(id: string): Promise<Product | null> {
+    try {
+      const { data, error } = await this.supabase
+        .from('products')
+        .select('*')
+        .eq('id', id)
+        .eq('is_active', true)
+        .single();
+
+      if (error) {
+        console.error('Error fetching product:', error);
+        return mockProducts.find(p => p.id.toString() === id) || null;
+      }
+
+      return data ? convertDbProductToProduct(data) : null;
+    } catch (error) {
+      console.error('Error in getProductById:', error);
+      return mockProducts.find(p => p.id.toString() === id) || null;
+    }
   }
 
   static async createProduct(data: CreateProductData): Promise<Product> {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    const newProduct: Product = {
-      ...data,
-      id: nextId++,
-      rating: 0,
-      reviews: 0,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
+    try {
+      const { data: { user } } = await this.supabase.auth.getUser();
+      
+      const insertData: DbInsertProduct = {
+        name: data.name,
+        description: data.description,
+        short_description: data.description?.substring(0, 150),
+        price: data.price,
+        original_price: data.originalPrice,
+        category: data.category as any,
+        brand: data.brand,
+        sku: `${data.brand?.toUpperCase()}-${Date.now()}`,
+        stock_quantity: 100, // Default stock
+        in_stock: data.inStock,
+        images: data.images,
+        features: data.features,
+        specifications: data.specifications,
+        is_featured: data.badge === 'Featured',
+        is_active: true,
+        slug: data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+        created_by: user?.id,
+      };
 
-    mockProducts.push(newProduct);
-    return newProduct;
+      const { data: newProduct, error } = await this.supabase
+        .from('products')
+        .insert(insertData)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error creating product:', error);
+        throw new Error('Failed to create product');
+      }
+
+      return convertDbProductToProduct(newProduct);
+    } catch (error) {
+      console.error('Error in createProduct:', error);
+      throw error;
+    }
   }
 
   static async updateProduct(data: UpdateProductData): Promise<Product | null> {
-    await new Promise(resolve => setTimeout(resolve, 600));
-    
-    const index = mockProducts.findIndex(p => p.id === data.id);
-    if (index === -1) return null;
+    try {
+      const updateData: DbUpdateProduct = {
+        name: data.name,
+        description: data.description,
+        price: data.price,
+        original_price: data.originalPrice,
+        category: data.category as any,
+        brand: data.brand,
+        in_stock: data.inStock,
+        images: data.images,
+        features: data.features,
+        specifications: data.specifications,
+        is_featured: data.badge === 'Featured',
+        updated_at: new Date().toISOString(),
+      };
 
-    const updatedProduct = {
-      ...mockProducts[index],
-      ...data,
-      updated_at: new Date().toISOString(),
-    };
+      const { data: updatedProduct, error } = await this.supabase
+        .from('products')
+        .update(updateData)
+        .eq('id', data.id.toString())
+        .select()
+        .single();
 
-    mockProducts[index] = updatedProduct;
-    return updatedProduct;
+      if (error) {
+        console.error('Error updating product:', error);
+        return null;
+      }
+
+      return updatedProduct ? convertDbProductToProduct(updatedProduct) : null;
+    } catch (error) {
+      console.error('Error in updateProduct:', error);
+      return null;
+    }
   }
 
-  static async deleteProduct(id: number): Promise<boolean> {
-    await new Promise(resolve => setTimeout(resolve, 400));
-    
-    const index = mockProducts.findIndex(p => p.id === id);
-    if (index === -1) return false;
+  static async deleteProduct(id: string): Promise<boolean> {
+    try {
+      // Soft delete by setting is_active to false
+      const { error } = await this.supabase
+        .from('products')
+        .update({ is_active: false })
+        .eq('id', id);
 
-    mockProducts.splice(index, 1);
-    return true;
+      if (error) {
+        console.error('Error deleting product:', error);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error in deleteProduct:', error);
+      return false;
+    }
   }
 
   static async getDashboardStats(): Promise<DashboardStats> {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
-    const totalProducts = mockProducts.length;
-    const lowStockProducts = mockProducts.filter(p => !p.inStock).length;
-    
-    return {
-      totalProducts,
-      totalUsers: 1247,
-      totalOrders: 856,
-      totalRevenue: 2847650,
-      recentOrders: 23,
-      lowStockProducts,
-    };
+    try {
+      // Get product stats
+      const { data: products, error: productsError } = await this.supabase
+        .from('products')
+        .select('id, in_stock')
+        .eq('is_active', true);
+
+      // Get user stats
+      const { data: users, error: usersError } = await this.supabase
+        .from('profiles')
+        .select('id')
+        .eq('role', 'user');
+
+      // Get order stats
+      const { data: orders, error: ordersError } = await this.supabase
+        .from('orders')
+        .select('id, total_amount, created_at');
+
+      // Calculate stats
+      const totalProducts = products?.length || 0;
+      const lowStockProducts = products?.filter((p: any) => !p.in_stock).length || 0;
+      const totalUsers = users?.length || 0;
+      const totalOrders = orders?.length || 0;
+      const totalRevenue = orders?.reduce((sum: number, order: any) => sum + Number(order.total_amount), 0) || 0;
+      
+      // Recent orders (today)
+      const today = new Date().toISOString().split('T')[0];
+      const recentOrders = orders?.filter((order: any) => 
+        order.created_at.startsWith(today)
+      ).length || 0;
+
+      return {
+        totalProducts,
+        totalUsers,
+        totalOrders,
+        totalRevenue,
+        recentOrders,
+        lowStockProducts,
+      };
+    } catch (error) {
+      console.error('Error in getDashboardStats:', error);
+      // Return fallback stats
+      return {
+        totalProducts: mockProducts.length,
+        totalUsers: 1247,
+        totalOrders: 856,
+        totalRevenue: 2847650,
+        recentOrders: 23,
+        lowStockProducts: mockProducts.filter(p => !p.inStock).length,
+      };
+    }
   }
 
   static async searchProducts(query: string): Promise<Product[]> {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
-    const lowerQuery = query.toLowerCase();
-    return mockProducts.filter(product => 
-      product.name.toLowerCase().includes(lowerQuery) ||
-      product.brand.toLowerCase().includes(lowerQuery) ||
-      product.category.toLowerCase().includes(lowerQuery) ||
-      product.description.toLowerCase().includes(lowerQuery)
-    );
+    try {
+      const { data, error } = await this.supabase
+        .from('products')
+        .select('*')
+        .eq('is_active', true)
+        .or(`name.ilike.%${query}%,brand.ilike.%${query}%,description.ilike.%${query}%,category.ilike.%${query}%`);
+
+      if (error) {
+        console.error('Error searching products:', error);
+        // Fallback to mock search
+        const lowerQuery = query.toLowerCase();
+        return mockProducts.filter(product => 
+          product.name.toLowerCase().includes(lowerQuery) ||
+          product.brand.toLowerCase().includes(lowerQuery) ||
+          product.category.toLowerCase().includes(lowerQuery) ||
+          product.description.toLowerCase().includes(lowerQuery)
+        );
+      }
+
+      return data?.map(convertDbProductToProduct) || [];
+    } catch (error) {
+      console.error('Error in searchProducts:', error);
+      return [];
+    }
   }
 
-  static getProductCategories(): string[] {
-    const categories = Array.from(new Set(mockProducts.map(p => p.category)));
-    return categories.sort();
+  static async getProductCategories(): Promise<string[]> {
+    try {
+      const { data, error } = await this.supabase
+        .from('categories')
+        .select('name')
+        .eq('is_active', true)
+        .order('sort_order');
+
+      if (error) {
+        console.error('Error fetching categories:', error);
+        return Array.from(new Set(mockProducts.map(p => p.category))).sort();
+      }
+
+      return data?.map((cat: any) => cat.name) || [];
+    } catch (error) {
+      console.error('Error in getProductCategories:', error);
+      return Array.from(new Set(mockProducts.map(p => p.category))).sort();
+    }
   }
 
-  static getProductBrands(): string[] {
-    const brands = Array.from(new Set(mockProducts.map(p => p.brand)));
-    return brands.sort();
+  static async getProductBrands(): Promise<string[]> {
+    try {
+      const { data, error } = await this.supabase
+        .from('brands')
+        .select('name')
+        .eq('is_active', true)
+        .order('name');
+
+      if (error) {
+        console.error('Error fetching brands:', error);
+        return Array.from(new Set(mockProducts.map(p => p.brand))).sort();
+      }
+
+      return data?.map((brand: any) => brand.name) || [];
+    } catch (error) {
+      console.error('Error in getProductBrands:', error);
+      return Array.from(new Set(mockProducts.map(p => p.brand))).sort();
+    }
+  }
+
+  // Image upload helper
+  static async uploadProductImage(file: File, productId: string): Promise<string | null> {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${productId}/${Date.now()}.${fileExt}`;
+
+      const { data, error } = await this.supabase.storage
+        .from('product-images')
+        .upload(fileName, file);
+
+      if (error) {
+        console.error('Error uploading image:', error);
+        return null;
+      }
+
+      // Get public URL
+      const { data: { publicUrl } } = this.supabase.storage
+        .from('product-images')
+        .getPublicUrl(fileName);
+
+      return publicUrl;
+    } catch (error) {
+      console.error('Error in uploadProductImage:', error);
+      return null;
+    }
+  }
+
+  // Delete image helper
+  static async deleteProductImage(imageUrl: string): Promise<boolean> {
+    try {
+      // Extract file path from URL
+      const urlParts = imageUrl.split('/product-images/');
+      if (urlParts.length !== 2) return false;
+      
+      const filePath = urlParts[1];
+      
+      const { error } = await this.supabase.storage
+        .from('product-images')
+        .remove([filePath]);
+
+      if (error) {
+        console.error('Error deleting image:', error);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error in deleteProductImage:', error);
+      return false;
+    }
   }
 }

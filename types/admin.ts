@@ -13,7 +13,7 @@ export interface AdminUser {
 }
 
 export interface Product {
-  id: number;
+  id: string | number;
   name: string;
   brand: string;
   price: number;
@@ -46,7 +46,7 @@ export interface CreateProductData {
 }
 
 export interface UpdateProductData extends Partial<CreateProductData> {
-  id: number;
+  id: string | number;
 }
 
 export interface DashboardStats {
