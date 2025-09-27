@@ -6,13 +6,13 @@ import { Check, Wifi, Zap, Crown, Radio, Satellite } from 'lucide-react';
 const plans = [
   {
     name: "Fixed LTE",
-    price: "Starting from R299",
+    price: "Starting from R299", // Update when starter price is confirmed
     speed: "Up to 100 Mbps",
     icon: Radio,
     popular: false,
     features: [
       "Reliable 4G/LTE Connection",
-      "No Data Caps on Selected Plans",
+      "Day/Night Data Allocations",
       "Quick Installation",
       "24/7 Customer Support",
       "Backup Power Options",
@@ -39,7 +39,7 @@ const plans = [
   },
   {
     name: "Microwave",
-    price: "Starting from R350",
+    price: "Starting from R925",
     speed: "Up to 500 Mbps",
     icon: Satellite,
     popular: false,

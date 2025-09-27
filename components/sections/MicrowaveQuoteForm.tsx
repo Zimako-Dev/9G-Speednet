@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { 
   X, User, Mail, Phone, MapPin, Calendar, CheckCircle, Building2, 
-  Antenna, AlertTriangle, Zap, Clock
+  Antenna, Zap, Clock
 } from 'lucide-react';
 
 const formSchema = z.object({
@@ -19,9 +19,6 @@ const formSchema = z.object({
   address: z.string().min(10, 'Please enter your full address'),
   city: z.string().min(2, 'Please enter your city'),
   postalCode: z.string().min(4, 'Please enter a valid postal code'),
-  buildingHeight: z.string().min(1, 'Please specify building height'),
-  rooftopAccess: z.string().min(1, 'Please specify rooftop access'),
-  lineOfSight: z.string().min(1, 'Please specify line of sight availability'),
   requiredSpeed: z.string().min(1, 'Please select required speed'),
   preferredCallTime: z.string().min(1, 'Please select a preferred call time'),
   urgency: z.string().min(1, 'Please select installation urgency'),
@@ -47,31 +44,16 @@ interface MicrowaveQuoteFormProps {
 export default function MicrowaveQuoteForm({ isOpen, onClose, selectedPackage }: MicrowaveQuoteFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [siteAssessment, setSiteAssessment] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
 
-  const watchedFields = watch(['buildingHeight', 'lineOfSight', 'rooftopAccess']);
-
-  // Generate simple site assessment
-  const generateAssessment = () => {
-    const [height, sight, access] = watchedFields;
-    if (!height || !sight || !access) return;
-
-    let assessment = 'Standard installation possible';
-    if (height === 'single-story' || sight === 'no' || access === 'difficult') {
-      assessment = 'May require additional equipment or site survey';
-    }
-    setSiteAssessment(assessment);
-  };
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -84,7 +66,6 @@ export default function MicrowaveQuoteForm({ isOpen, onClose, selectedPackage }:
     
     setTimeout(() => {
       setIsSubmitted(false);
-      setSiteAssessment(null);
       reset();
       onClose();
     }, 4000);
@@ -135,13 +116,13 @@ export default function MicrowaveQuoteForm({ isOpen, onClose, selectedPackage }:
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-3">Quote Request Submitted!</h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Thank you for your interest in 9G Speednet Microwave solutions. Our technical team will 
-              conduct a site survey and provide you with a detailed quote within 48 hours.
+              Thank you for your interest in 9G Speednet Microwave solutions. Our sales team will 
+              contact you to discuss your requirements and provide you with a detailed quote within 48 hours.
             </p>
             <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 max-w-md mx-auto">
               <h4 className="font-semibold text-primary-900 mb-2">What happens next?</h4>
               <ul className="text-sm text-primary-700 space-y-1 text-left">
-                <li>• Technical assessment within 48 hours</li>
+                <li>• Sales consultation within 48 hours</li>
                 <li>• Professional site survey scheduled</li>
                 <li>• Detailed quote with installation timeline</li>
                 <li>• Equipment specification and placement plan</li>
@@ -339,82 +320,6 @@ export default function MicrowaveQuoteForm({ isOpen, onClose, selectedPackage }:
                 </div>
               </div>
 
-              {/* Technical Assessment */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                  <Antenna className="w-5 h-5 mr-2 text-primary-500" />
-                  Technical Assessment
-                </h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Building Height *
-                    </label>
-                    <select
-                      {...register('buildingHeight')}
-                      onChange={generateAssessment}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                    >
-                      <option value="">Select building height</option>
-                      <option value="single-story">Single Story (1-2 floors)</option>
-                      <option value="multi-story">Multi-Story (3-5 floors)</option>
-                      <option value="high-rise">High-Rise (6+ floors)</option>
-                    </select>
-                    {errors.buildingHeight && (
-                      <p className="text-red-500 text-xs mt-1">{errors.buildingHeight.message}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Rooftop Access *
-                    </label>
-                    <select
-                      {...register('rooftopAccess')}
-                      onChange={generateAssessment}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                    >
-                      <option value="">Select access type</option>
-                      <option value="easy">Easy Access</option>
-                      <option value="moderate">Moderate Access</option>
-                      <option value="difficult">Difficult Access</option>
-                      <option value="restricted">Restricted Access</option>
-                    </select>
-                    {errors.rooftopAccess && (
-                      <p className="text-red-500 text-xs mt-1">{errors.rooftopAccess.message}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Line of Sight Availability *
-                    </label>
-                    <select
-                      {...register('lineOfSight')}
-                      onChange={generateAssessment}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                    >
-                      <option value="">Select line of sight status</option>
-                      <option value="yes">Clear Line of Sight</option>
-                      <option value="partial">Partial Obstruction</option>
-                      <option value="no">No Clear Line of Sight</option>
-                      <option value="unknown">Unknown - Requires Survey</option>
-                    </select>
-                    {errors.lineOfSight && (
-                      <p className="text-red-500 text-xs mt-1">{errors.lineOfSight.message}</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Site Assessment Result */}
-              {siteAssessment && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-900 mb-2 flex items-center">
-                    <AlertTriangle className="w-4 h-4 mr-2" />
-                    Preliminary Assessment
-                  </h4>
-                  <p className="text-blue-700 text-sm">{siteAssessment}</p>
-                </div>
-              )}
 
               {/* Requirements & Preferences */}
               <div>

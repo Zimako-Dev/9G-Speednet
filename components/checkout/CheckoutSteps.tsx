@@ -1,7 +1,7 @@
 'use client';
 
 import { CheckoutStep } from '@/app/checkout/page';
-import { Truck, CreditCard, Eye, CheckCircle } from 'lucide-react';
+import { Truck, CreditCard, Eye, CheckCircle, Package } from 'lucide-react';
 
 interface CheckoutStepsProps {
   currentStep: CheckoutStep;
@@ -15,19 +15,25 @@ const steps = [
     icon: Truck,
   },
   {
-    id: 'payment' as CheckoutStep,
-    name: 'Payment',
-    description: 'Payment details',
-    icon: CreditCard,
-  },
-  {
     id: 'review' as CheckoutStep,
     name: 'Review',
     description: 'Order confirmation',
     icon: Eye,
   },
   {
-    id: 'confirmation' as CheckoutStep,
+    id: 'payment' as CheckoutStep,
+    name: 'Payment',
+    description: 'Payment details',
+    icon: CreditCard,
+  },
+  {
+    id: 'tracking' as CheckoutStep,
+    name: 'Tracking',
+    description: 'Order tracking',
+    icon: Package,
+  },
+  {
+    id: 'complete' as CheckoutStep,
     name: 'Complete',
     description: 'Order placed',
     icon: CheckCircle,
@@ -57,7 +63,7 @@ export default function CheckoutSteps({ currentStep }: CheckoutStepsProps) {
                 <div className="flex flex-col items-center">
                   {/* Icon Circle */}
                   <div
-                    className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-300 ${
+                    className={`relative z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-300 ${
                       isCompleted
                         ? 'bg-accent-green border-accent-green text-white'
                         : isCurrent
@@ -88,15 +94,14 @@ export default function CheckoutSteps({ currentStep }: CheckoutStepsProps) {
                 {/* Connector Line */}
                 {stepIdx < steps.length - 1 && (
                   <div
-                    className={`absolute top-5 sm:top-6 left-1/2 w-full h-0.5 -ml-6 transition-all duration-300 ${
+                    className={`absolute top-5 sm:top-6 h-0.5 transition-all duration-300 z-0 ${
                       stepIdx < currentStepIndex
                         ? 'bg-accent-green'
                         : 'bg-gray-300'
                     }`}
                     style={{
-                      left: 'calc(50% + 20px)',
-                      right: 'calc(-50% + 20px)',
-                      width: 'calc(100% - 40px)',
+                      left: 'calc(50% + 24px)',
+                      right: 'calc(-50% + 24px)',
                     }}
                   />
                 )}

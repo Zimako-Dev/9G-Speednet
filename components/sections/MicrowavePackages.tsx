@@ -65,7 +65,7 @@ const businessPackages = [
   {
     name: 'Business Basic',
     speed: '50/50 Mbps',
-    price: 'R2,000',
+    price: 'R925',
     period: '/month',
     description: 'Perfect for small businesses with basic connectivity needs',
     features: [
@@ -83,7 +83,7 @@ const businessPackages = [
   {
     name: 'Business Pro',
     speed: '100/100 Mbps',
-    price: 'R4,000',
+    price: 'R1,350',
     period: '/month',
     description: 'Ideal for growing businesses with higher bandwidth requirements',
     features: [
@@ -101,7 +101,7 @@ const businessPackages = [
   {
     name: 'Business Elite',
     speed: '200/200 Mbps',
-    price: 'R5,500',
+    price: 'R2,750',
     period: '/month',
     description: 'Maximum performance for enterprise operations',
     features: [

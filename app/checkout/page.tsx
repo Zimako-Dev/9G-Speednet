@@ -10,10 +10,11 @@ import ShippingForm from '@/components/checkout/ShippingForm';
 import PaymentForm from '@/components/checkout/PaymentForm';
 import OrderReview from '@/components/checkout/OrderReview';
 import OrderConfirmation from '@/components/checkout/OrderConfirmation';
+import OrderTracking from '@/components/checkout/OrderTracking';
 import { Shield, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
-export type CheckoutStep = 'shipping' | 'payment' | 'review' | 'confirmation';
+export type CheckoutStep = 'shipping' | 'review' | 'payment' | 'tracking' | 'complete';
 
 export interface ShippingInfo {
   firstName: string;
@@ -88,9 +89,9 @@ export default function CheckoutPage() {
     }
   }, [user, state.items.length, router]);
 
-  // Generate order number when reaching confirmation
+  // Generate order number when reaching tracking
   useEffect(() => {
-    if (currentStep === 'confirmation' && !orderNumber) {
+    if (currentStep === 'tracking' && !orderNumber) {
       const orderNum = `9G${Date.now().toString().slice(-8)}`;
       setOrderNumber(orderNum);
     }
@@ -99,23 +100,29 @@ export default function CheckoutPage() {
   const handleNextStep = () => {
     switch (currentStep) {
       case 'shipping':
-        setCurrentStep('payment');
-        break;
-      case 'payment':
         setCurrentStep('review');
         break;
       case 'review':
-        setCurrentStep('confirmation');
+        setCurrentStep('payment');
+        break;
+      case 'payment':
+        setCurrentStep('tracking');
+        break;
+      case 'tracking':
+        setCurrentStep('complete');
         break;
     }
   };
 
   const handlePreviousStep = () => {
     switch (currentStep) {
-      case 'payment':
+      case 'review':
         setCurrentStep('shipping');
         break;
-      case 'review':
+      case 'payment':
+        setCurrentStep('review');
+        break;
+      case 'tracking':
         setCurrentStep('payment');
         break;
     }
@@ -162,6 +169,14 @@ export default function CheckoutPage() {
                   onNext={handleNextStep}
                 />
               )}
+              {currentStep === 'review' && (
+                <OrderReview
+                  shippingInfo={shippingInfo}
+                  paymentInfo={paymentInfo}
+                  onNext={handleNextStep}
+                  onPrevious={handlePreviousStep}
+                />
+              )}
               {currentStep === 'payment' && (
                 <PaymentForm
                   paymentInfo={paymentInfo}
@@ -171,15 +186,14 @@ export default function CheckoutPage() {
                   onPrevious={handlePreviousStep}
                 />
               )}
-              {currentStep === 'review' && (
-                <OrderReview
+              {currentStep === 'tracking' && (
+                <OrderTracking
+                  orderNumber={orderNumber}
                   shippingInfo={shippingInfo}
-                  paymentInfo={paymentInfo}
                   onNext={handleNextStep}
-                  onPrevious={handlePreviousStep}
                 />
               )}
-              {currentStep === 'confirmation' && (
+              {currentStep === 'complete' && (
                 <OrderConfirmation
                   orderNumber={orderNumber}
                   shippingInfo={shippingInfo}

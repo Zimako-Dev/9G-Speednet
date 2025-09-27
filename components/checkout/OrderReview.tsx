@@ -224,7 +224,7 @@ export default function OrderReview({
             className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Payment
+            Back to Shipping
           </button>
           
           <button
@@ -235,12 +235,12 @@ export default function OrderReview({
             {isProcessing ? (
               <>
                 <Loader className="w-4 h-4 mr-2 animate-spin" />
-                Processing Order...
+                Processing...
               </>
             ) : (
               <>
                 <CheckCircle className="w-4 h-4 mr-2" />
-                Place Order
+                Proceed to Payment
               </>
             )}
           </button>

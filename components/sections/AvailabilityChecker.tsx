@@ -23,7 +23,7 @@ export default function AvailabilityChecker() {
     // Mock results based on address
     const mockResult = {
       available: true,
-      services: ['Fibre 100Mbps - R399/month', 'Fixed LTE 50Mbps - R299/month'],
+      services: ['Fibre 100Mbps - R399/month', 'Fixed LTE 50Mbps - R399/month'],
       message: 'Great news! High-speed internet is available in your area.'
     };
     

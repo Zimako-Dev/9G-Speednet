@@ -7,13 +7,13 @@ import PackageOrderForm from './PackageOrderForm';
 const ltePackages = [
   {
     name: "LTE Starter",
-    price: 299,
-    data: "50GB",
+    price: 299, // Please update with correct price
+    data: "120GB",
     speed: "Up to 20 Mbps",
     icon: Radio,
     popular: false,
     features: [
-      "50GB Monthly Data",
+      "120GB Monthly Data (60GB Day + 60GB Night)",
       "Up to 20 Mbps Speed",
       "Free Router Rental",
       "24/7 Customer Support",
@@ -23,13 +23,13 @@ const ltePackages = [
   },
   {
     name: "LTE Standard",
-    price: 449,
-    data: "100GB",
+    price: 399,
+    data: "200GB",
     speed: "Up to 50 Mbps",
     icon: Wifi,
     popular: true,
     features: [
-      "100GB Monthly Data",
+      "200GB Monthly Data (100GB Day + 100GB Night)",
       "Up to 50 Mbps Speed",
       "Premium Router Included",
       "Priority Customer Support",
@@ -41,13 +41,13 @@ const ltePackages = [
   },
   {
     name: "LTE Premium",
-    price: 699,
-    data: "200GB",
+    price: 499,
+    data: "400GB",
     speed: "Up to 100 Mbps",
     icon: Zap,
     popular: false,
     features: [
-      "200GB Monthly Data",
+      "400GB Monthly Data (200GB Day + 200GB Night)",
       "Up to 100 Mbps Speed",
       "Advanced Router Included",
       "VIP Customer Support",
@@ -60,7 +60,7 @@ const ltePackages = [
   },
   {
     name: "LTE Unlimited",
-    price: 999,
+    price: 575,
     data: "Unlimited",
     speed: "Up to 100 Mbps",
     icon: Crown,
