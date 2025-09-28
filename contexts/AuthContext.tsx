@@ -75,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           'admin@9gspeednet.com': true,
           'manager@9gspeednet.com': true,
           'staff@9gspeednet.com': true,
+          'admin@9gspeed.co.za': true,
         };
         
         const isAdmin = MOCK_ADMIN_USERS[data.user.email || ''] || false;
