@@ -47,6 +47,8 @@ export default function EditProductClient({ productId }: EditProductClientProps)
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -75,7 +77,7 @@ export default function EditProductClient({ productId }: EditProductClientProps)
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const productData = await ProductService.getProductById(parseInt(productId));
+        const productData = await ProductService.getProductById(productId);
         if (!productData) {
           router.push('/admin/products');
           return;
@@ -114,6 +116,32 @@ export default function EditProductClient({ productId }: EditProductClientProps)
     fetchProduct();
   }, [productId, form, router]);
 
+  useEffect(() => {
+    let isActive = true;
+
+    const loadOptions = async () => {
+      try {
+        const [fetchedCategories, fetchedBrands] = await Promise.all([
+          ProductService.getProductCategories(),
+          ProductService.getProductBrands(),
+        ]);
+
+        if (!isActive) return;
+
+        setCategories(fetchedCategories);
+        setBrands(fetchedBrands);
+      } catch (error) {
+        console.error('Error loading product options:', error);
+      }
+    };
+
+    loadOptions();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   const onSubmit = async (data: ProductFormData) => {
     if (!product) return;
 
@@ -149,9 +177,6 @@ export default function EditProductClient({ productId }: EditProductClientProps)
       setIsSubmitting(false);
     }
   };
-
-  const categories = ProductService.getProductCategories();
-  const brands = ProductService.getProductBrands();
 
   if (loading) {
     return (
