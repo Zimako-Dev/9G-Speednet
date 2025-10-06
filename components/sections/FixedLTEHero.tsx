@@ -70,21 +70,37 @@ export default function FixedLTEHero() {
                 <span className="text-gray-700 font-medium text-sm">Multiple Networks</span>
               </div>
               <div className="flex items-center">
-                <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
                 <span className="text-gray-700 font-medium text-sm">24/7 Support</span>
               </div>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="group bg-primary-500 text-white px-6 py-3 rounded-2xl font-semibold text-base transition-all duration-300 hover:bg-primary-600 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center">
+              <button
+                className="group bg-primary-500 text-white px-6 py-3 rounded-2xl font-semibold text-base transition-all duration-300 hover:bg-primary-600 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
+                onClick={() => {
+                  const packagesSection = document.getElementById('lte-packages');
+                  if (packagesSection) {
+                    packagesSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
                 View Packages
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
-              <button className="group bg-white border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-2xl font-semibold text-base transition-all duration-300 hover:border-primary-300 hover:text-primary-600 flex items-center justify-center">
+              <button
+                className="group bg-white border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-2xl font-semibold text-base transition-all duration-300 hover:border-primary-300 hover:text-primary-600 flex items-center justify-center"
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
                 Get Quote
               </button>
             </div>
+          
           </div>
 
           {/* Right Column - Visual */}

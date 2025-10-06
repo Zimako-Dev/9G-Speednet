@@ -83,28 +83,46 @@ export default function FibreHero() {
                 <span className="text-gray-700 font-medium text-sm">Symmetrical Speeds</span>
               </div>
               <div className="flex items-center">
-                <CheckCircle className="w-4 h-4 text-accent-green mr-2" />
                 <span className="text-gray-700 font-medium text-sm">99.9% Uptime</span>
               </div>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="group bg-primary-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:bg-primary-600 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center">
+              <button
+                className="group bg-primary-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:bg-primary-600 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
+                onClick={() => {
+                  const packagesSection = document.getElementById('fibre-packages');
+                  if (packagesSection) {
+                    packagesSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
                 View Packages
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
-              <button className="group bg-white border-2 border-gray-200 text-gray-700 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:border-primary-300 hover:text-primary-600 flex items-center justify-center">
+              <button
+                className="group bg-white border-2 border-gray-200 text-gray-700 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 hover:border-primary-300 hover:text-primary-600 flex items-center justify-center"
+                onClick={() => {
+                  const installationSection = document.getElementById('fibre-installation');
+                  if (installationSection) {
+                    installationSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
                 Check Availability
               </button>
             </div>
+          
           </div>
 
           {/* Right Column - Visual */}
           <div className={`relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* Speed Meter */}
-            <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 mb-3">
-              <div className="text-center mb-3">
+            <div className="bg-white/90 backdrop-blur-sm border border-gray-100 rounded-3xl shadow-2xl p-5 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-accent-blue/10 to-transparent"></div>
+
+              <div className="text-center mb-3 relative">
                 <h3 className="text-base font-bold text-gray-900 mb-1">Fibre Speed</h3>
                 <p className="text-gray-600 text-xs">Real-time performance</p>
               </div>
@@ -154,7 +172,7 @@ export default function FibreHero() {
               </div>
 
               {/* Speed Info */}
-              <div className="grid grid-cols-2 gap-2 mb-2">
+              <div className="grid grid-cols-2 gap-2 mb-2 relative">
                 <div className="text-center p-1.5 bg-gradient-to-r from-accent-green/10 to-accent-blue/10 rounded-md">
                   <div className="flex items-center justify-center mb-0.5">
                     <Download className="w-2.5 h-2.5 text-accent-green mr-0.5" />

@@ -88,7 +88,7 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* CTA Buttons */}
+            {/* CTA Button */}
             <div className="flex flex-col sm:flex-row gap-2 mb-6">
               <button 
                 className="group bg-primary-500 text-white px-4 py-2 rounded-lg font-semibold text-xs transition-all duration-300 hover:bg-primary-600 hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center"
@@ -101,10 +101,6 @@ export default function Hero() {
               >
                 Get Started Today
                 <ArrowRight className="ml-1.5 w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
-              <button className="group bg-white border-2 border-gray-200 text-gray-700 px-4 py-2 rounded-lg font-semibold text-xs transition-all duration-300 hover:border-primary-300 hover:text-primary-600 flex items-center justify-center">
-                <Play className="mr-1.5 w-3.5 h-3.5 group-hover:scale-110 transition-transform duration-300" />
-                Watch Demo
               </button>
             </div>
 

@@ -3,26 +3,16 @@
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { X, Plus, Minus, ShoppingBag, Trash2, CreditCard, User } from 'lucide-react';
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import AuthModal from '@/components/auth/AuthModal';
 
 export default function CartSidebar() {
   const { state, removeItem, updateQuantity, closeCart, clearCart } = useCart();
   const { user } = useAuth();
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // Consistent number formatting to avoid hydration issues
   const formatPrice = (price: number) => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   };
-
-  // Close auth modal when user successfully signs in
-  useEffect(() => {
-    if (user && isAuthModalOpen) {
-      setIsAuthModalOpen(false);
-    }
-  }, [user, isAuthModalOpen]);
 
   if (!state.isOpen) return null;
 
@@ -179,31 +169,6 @@ export default function CartSidebar() {
                 
                 {/* Checkout Buttons */}
                 <div className="space-y-3">
-                  {user ? (
-                    <Link
-                      href="/checkout"
-                      onClick={closeCart}
-                      className="w-full bg-primary-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-600 transition-colors flex items-center justify-center"
-                    >
-                      <CreditCard className="w-4 h-4 mr-2" />
-                      Proceed to Checkout
-                    </Link>
-                  ) : (
-                    <div className="space-y-2">
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
-                        <User className="w-5 h-5 text-blue-600 mx-auto mb-1" />
-                        <p className="text-sm text-blue-700 font-medium">Sign in to checkout</p>
-                        <p className="text-xs text-blue-600">Create an account to save your cart and track orders</p>
-                      </div>
-                      <button 
-                        onClick={() => setIsAuthModalOpen(true)}
-                        className="w-full bg-primary-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-600 transition-colors flex items-center justify-center"
-                      >
-                        <User className="w-4 h-4 mr-2" />
-                        Sign In to Checkout
-                      </button>
-                    </div>
-                  )}
                   <button
                     onClick={closeCart}
                     className="w-full border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:border-primary-500 hover:text-primary-600 transition-colors"
@@ -224,12 +189,6 @@ export default function CartSidebar() {
         </div>
       </div>
 
-      {/* Auth Modal */}
-      <AuthModal 
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        position="checkout"
-      />
     </>
   );
 }

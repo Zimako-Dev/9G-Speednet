@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Check, Radio, Zap, Crown, Wifi, Download } from 'lucide-react';
 import PackageOrderForm from './PackageOrderForm';
 
@@ -80,6 +80,15 @@ const ltePackages = [
   }
 ];
 
+const DEFAULT_NETWORK = 'Let 9G Recommend';
+
+const toPackageSummary = (pkg: typeof ltePackages[number]) => ({
+  name: pkg.name,
+  price: pkg.price,
+  data: pkg.data,
+  speed: pkg.speed,
+});
+
 export default function LTEPackages() {
   const [hoveredPackage, setHoveredPackage] = useState<number | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -89,16 +98,27 @@ export default function LTEPackages() {
     data: string;
     speed: string;
   } | null>(null);
+  const [preferredNetwork, setPreferredNetwork] = useState<string | null>(null);
 
-  const handleChoosePackage = (pkg: typeof ltePackages[0]) => {
-    setSelectedPackage({
-      name: pkg.name,
-      price: pkg.price,
-      data: pkg.data,
-      speed: pkg.speed,
-    });
+  const openFormWithNetwork = useCallback((network?: string, pkg?: typeof ltePackages[number]) => {
+    setPreferredNetwork(network || DEFAULT_NETWORK);
+    setSelectedPackage(toPackageSummary(pkg ?? ltePackages[0]));
     setIsFormOpen(true);
+  }, []);
+
+  const handleChoosePackage = (pkg: typeof ltePackages[number]) => {
+    openFormWithNetwork(preferredNetwork || undefined, pkg);
   };
+
+  useEffect(() => {
+    const listener = (event: Event) => {
+      const customEvent = event as CustomEvent<{ network: string }>;
+      openFormWithNetwork(customEvent.detail?.network);
+    };
+
+    window.addEventListener('openPackageModalWithNetwork', listener as EventListener);
+    return () => window.removeEventListener('openPackageModalWithNetwork', listener as EventListener);
+  }, [openFormWithNetwork]);
 
   return (
     <section id="lte-packages" className="py-16 px-6 bg-white">
@@ -201,7 +221,10 @@ export default function LTEPackages() {
             We offer tailored Fixed LTE solutions for businesses with specific requirements. 
             Contact our team for custom data allowances, dedicated support, and enterprise features.
           </p>
-          <button className="bg-primary-500 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+          <button
+            className="bg-primary-500 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+            onClick={() => openFormWithNetwork(DEFAULT_NETWORK)}
+          >
             Request Custom Quote
           </button>
         </div>
@@ -210,8 +233,13 @@ export default function LTEPackages() {
       {/* Package Order Form Modal */}
       <PackageOrderForm
         isOpen={isFormOpen}
-        onClose={() => setIsFormOpen(false)}
+        onClose={() => {
+          setIsFormOpen(false);
+          setSelectedPackage(null);
+          setPreferredNetwork(null);
+        }}
         selectedPackage={selectedPackage}
+        preferredNetwork={preferredNetwork || DEFAULT_NETWORK}
       />
     </section>
   );

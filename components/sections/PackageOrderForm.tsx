@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { X, User, Mail, Phone, MapPin, Calendar, CheckCircle } from 'lucide-react';
+
+const networkOptions = ['Vodacom', 'MTN', 'Cell C', 'Telkom', 'Let 9G Recommend'];
 
 const formSchema = z.object({
   firstName: z.string().min(2, 'First name must be at least 2 characters'),
@@ -15,6 +17,7 @@ const formSchema = z.object({
   city: z.string().min(2, 'Please enter your city'),
   postalCode: z.string().min(4, 'Please enter a valid postal code'),
   preferredCallTime: z.string().min(1, 'Please select a preferred call time'),
+  preferredNetwork: z.string().min(1, 'Please select a preferred network'),
   additionalNotes: z.string().optional(),
 });
 
@@ -29,9 +32,10 @@ interface PackageOrderFormProps {
     data: string;
     speed: string;
   } | null;
+  preferredNetwork: string | null;
 }
 
-export default function PackageOrderForm({ isOpen, onClose, selectedPackage }: PackageOrderFormProps) {
+export default function PackageOrderForm({ isOpen, onClose, selectedPackage, preferredNetwork }: PackageOrderFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,9 +44,17 @@ export default function PackageOrderForm({ isOpen, onClose, selectedPackage }: P
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      preferredNetwork: preferredNetwork || '',
+    },
   });
+
+  useEffect(() => {
+    setValue('preferredNetwork', preferredNetwork || '');
+  }, [preferredNetwork, setValue]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -275,6 +287,25 @@ export default function PackageOrderForm({ isOpen, onClose, selectedPackage }: P
                 Contact Preferences
               </h3>
               <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Preferred Network *
+                  </label>
+                  <select
+                    {...register('preferredNetwork')}
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-sm sm:text-base"
+                  >
+                    <option value="">Select a network</option>
+                    {networkOptions.map((network) => (
+                      <option key={network} value={network}>
+                        {network}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.preferredNetwork && (
+                    <p className="text-red-500 text-xs mt-1">{errors.preferredNetwork.message}</p>
+                  )}
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Preferred Call Time *

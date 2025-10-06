@@ -170,17 +170,34 @@ export default function LTEFeatures() {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center bg-gradient-to-r from-primary-500 via-accent-purple to-accent-blue rounded-2xl p-8 text-white">
+        <div className="bg-primary-500 text-white rounded-2xl p-8 text-center shadow-xl">
           <h3 className="text-xl font-bold mb-3">Ready to Get Connected?</h3>
           <p className="text-sm text-white/90 mb-5 max-w-2xl mx-auto">
-            Join thousands of satisfied customers who've chosen Fixed LTE for reliable, 
+            Join thousands of satisfied customers who've chosen Fixed LTE for reliable,
             fast internet connectivity wherever they are.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button className="bg-white text-primary-500 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg">
+            <button
+              className="bg-white text-primary-500 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg"
+              onClick={() => {
+                const packagesSection = document.getElementById('lte-packages');
+                if (packagesSection) {
+                  packagesSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               View Packages
             </button>
-            <button className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-white hover:text-primary-500 transition-all duration-300">
+            <button
+              className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-white hover:text-primary-500 transition-all duration-300"
+              onClick={() => {
+                window.dispatchEvent(
+                  new CustomEvent('openPackageModalWithNetwork', {
+                    detail: { network: 'Let 9G Recommended' },
+                  })
+                );
+              }}
+            >
               Get Free Quote
             </button>
           </div>

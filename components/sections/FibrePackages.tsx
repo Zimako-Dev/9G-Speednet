@@ -153,6 +153,24 @@ export default function FibrePackages() {
     setIsFormOpen(true);
   };
 
+  const handleEnterpriseQuote = () => {
+    const enterprisePackage = fibrePackages.find((pkg) => pkg.name === 'Fibre Enterprise')
+      ?? fibrePackages.find((pkg) => pkg.category.includes('Enterprise'));
+
+    if (enterprisePackage) {
+      handleChoosePackage(enterprisePackage);
+    } else {
+      setSelectedPackage({
+        name: 'Enterprise Custom Quote',
+        price: 0,
+        downloadSpeed: 'Custom',
+        uploadSpeed: 'Custom',
+        category: 'Enterprise',
+      });
+      setIsFormOpen(true);
+    }
+  };
+
   const categories = ["All", "Residential", "Business", "Enterprise"];
   
   const filteredPackages = selectedCategory === "All" 
@@ -290,7 +308,10 @@ export default function FibrePackages() {
             We offer custom fibre solutions with speeds up to 10 Gbps for enterprises with demanding requirements. 
             Contact our team for dedicated circuits and managed services.
           </p>
-          <button className="bg-primary-500 text-white px-5 py-2 rounded-md font-semibold text-xs hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+          <button
+            onClick={handleEnterpriseQuote}
+            className="bg-primary-500 text-white px-5 py-2 rounded-md font-semibold text-xs hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+          >
             Request Enterprise Quote
           </button>
         </div>

@@ -52,6 +52,13 @@ export default function FibreFeatures() {
     return () => clearTimeout(timer);
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    const target = document.getElementById(sectionId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="fibre-features" className="py-12 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
