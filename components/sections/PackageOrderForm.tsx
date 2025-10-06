@@ -33,9 +33,10 @@ interface PackageOrderFormProps {
     speed: string;
   } | null;
   preferredNetwork: string | null;
+  formTitle?: string;
 }
 
-export default function PackageOrderForm({ isOpen, onClose, selectedPackage, preferredNetwork }: PackageOrderFormProps) {
+export default function PackageOrderForm({ isOpen, onClose, selectedPackage, preferredNetwork, formTitle }: PackageOrderFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -84,7 +85,7 @@ export default function PackageOrderForm({ isOpen, onClose, selectedPackage, pre
         <div className="sticky top-0 bg-white border-b border-gray-200 p-4 sm:p-6 rounded-t-xl sm:rounded-t-2xl">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Order Package</h2>
+              <h2 className="text-lg sm:text-2xl font-bold text-gray-900">{formTitle || 'Order Package'}</h2>
               {selectedPackage && (
                 <p className="text-sm text-gray-600 mt-1">
                   {selectedPackage.name} - R{selectedPackage.price}/month

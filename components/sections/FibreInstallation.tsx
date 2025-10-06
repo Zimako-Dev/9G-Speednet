@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { CheckCircle, MapPin, Clock, Users, Phone, AlertCircle } from 'lucide-react';
+import PackageOrderForm from './PackageOrderForm';
 
 const installationSteps = [
   {
@@ -48,6 +49,8 @@ const coverageAreas = [
 export default function FibreInstallation() {
   const [selectedStep, setSelectedStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [formPurpose, setFormPurpose] = useState<'address' | 'installation' | 'quote'>('quote');
 
   useEffect(() => {
     setIsVisible(true);
@@ -58,6 +61,42 @@ export default function FibreInstallation() {
     
     return () => clearInterval(interval);
   }, []);
+
+  const handleCheckAddress = () => {
+    setFormPurpose('address');
+    setIsFormOpen(true);
+  };
+
+  const handleScheduleInstallation = () => {
+    setFormPurpose('installation');
+    setIsFormOpen(true);
+  };
+
+  const handleGetQuote = () => {
+    setFormPurpose('quote');
+    setIsFormOpen(true);
+  };
+
+  const getFormTitle = () => {
+    switch (formPurpose) {
+      case 'address':
+        return 'Check Address Coverage';
+      case 'installation':
+        return 'Schedule Installation';
+      case 'quote':
+        return 'Get Free Quote';
+      default:
+        return 'Contact Us';
+    }
+  };
+
+  // Default package for fibre
+  const defaultPackage = {
+    name: 'Fibre Internet',
+    price: 399,
+    data: 'Unlimited',
+    speed: 'Up to 1000 Mbps'
+  };
 
   return (
     <section id="fibre-installation" className="py-12 px-6 bg-gradient-to-br from-gray-50 to-white">
@@ -248,7 +287,10 @@ export default function FibreInstallation() {
           </div>
 
           <div className="text-center">
-            <button className="bg-primary-500 text-white px-6 py-2.5 rounded-lg font-semibold text-sm hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+            <button 
+              onClick={handleCheckAddress}
+              className="bg-primary-500 text-white px-6 py-2.5 rounded-lg font-semibold text-sm hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+            >
               Check Your Address
             </button>
           </div>
@@ -263,15 +305,30 @@ export default function FibreInstallation() {
             Contact us today to start the process.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center">
-            <button className="bg-primary-500 text-white px-5 py-2 rounded-md font-semibold text-xs hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+            <button 
+              onClick={handleScheduleInstallation}
+              className="bg-primary-500 text-white px-5 py-2 rounded-md font-semibold text-xs hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+            >
               Schedule Installation
             </button>
-            <button className="bg-gray-100 text-gray-900 px-5 py-2 rounded-md font-semibold text-xs hover:bg-gray-200 transition-all duration-300 border border-gray-200 hover:border-primary-300">
+            <button 
+              onClick={handleGetQuote}
+              className="bg-gray-100 text-gray-900 px-5 py-2 rounded-md font-semibold text-xs hover:bg-gray-200 transition-all duration-300 border border-gray-200 hover:border-primary-300"
+            >
               Get Free Quote
             </button>
           </div>
         </div>
       </div>
+
+      {/* Package Order Form Modal */}
+      <PackageOrderForm
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        selectedPackage={defaultPackage}
+        preferredNetwork="Fibre"
+        formTitle={getFormTitle()}
+      />
     </section>
   );
 }
