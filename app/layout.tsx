@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { CartProvider } from '@/contexts/CartContext';
 import { AuthProvider } from '@/contexts/AuthContext';
+import CartSidebar from '@/components/sections/CartSidebar';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -40,6 +41,7 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             {children}
+            <CartSidebar />
           </CartProvider>
         </AuthProvider>
       </body>

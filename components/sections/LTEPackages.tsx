@@ -126,7 +126,7 @@ export default function LTEPackages() {
         {/* Section Header */}
         <div className="text-center mb-10">
           <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-            Fixed LTE <span className="text-primary-500">Packages</span>
+            LTE/5G <span className="text-primary-500">Packages</span>
           </h2>
           <p className="text-sm text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Choose from our range of Fixed LTE packages designed to meet your connectivity needs. 

@@ -4,10 +4,12 @@ import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { X, Plus, Minus, ShoppingBag, Trash2, CreditCard, User } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function CartSidebar() {
   const { state, removeItem, updateQuantity, closeCart, clearCart } = useCart();
   const { user } = useAuth();
+  const router = useRouter();
 
   // Consistent number formatting to avoid hydration issues
   const formatPrice = (price: number) => {
@@ -169,6 +171,28 @@ export default function CartSidebar() {
                 
                 {/* Checkout Buttons */}
                 <div className="space-y-3">
+                  {user ? (
+                    <Link
+                      href="/checkout"
+                      onClick={closeCart}
+                      className="w-full bg-primary-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-600 transition-colors flex items-center justify-center space-x-2"
+                    >
+                      <CreditCard className="w-5 h-5" />
+                      <span>Proceed to Checkout</span>
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        closeCart();
+                        // Trigger auth modal - you'll need to implement this
+                        alert('Please sign in to proceed to checkout');
+                      }}
+                      className="w-full bg-primary-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-600 transition-colors flex items-center justify-center space-x-2"
+                    >
+                      <User className="w-5 h-5" />
+                      <span>Sign In to Checkout</span>
+                    </button>
+                  )}
                   <button
                     onClick={closeCart}
                     className="w-full border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:border-primary-500 hover:text-primary-600 transition-colors"
