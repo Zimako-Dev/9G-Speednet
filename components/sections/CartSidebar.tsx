@@ -96,8 +96,14 @@ export default function CartSidebar() {
                         
                         {/* Remove Button */}
                         <button
-                          onClick={() => removeItem(item.id)}
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            removeItem(item.id);
+                          }}
                           className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                          aria-label="Remove item"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>

@@ -133,6 +133,7 @@ interface CartContextType {
   toggleCart: () => void;
   openCart: () => void;
   closeCart: () => void;
+  itemCount: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -179,6 +180,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         toggleCart,
         openCart,
         closeCart,
+        itemCount: state.itemCount,
       }}
     >
       {children}

@@ -9,10 +9,10 @@ import UserDropdown from '@/components/auth/UserDropdown';
 import AuthModal from '@/components/auth/AuthModal';
 
 export default function Navbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, loading } = useAuth();
-  const { openCart } = useCart();
+  const { openCart, itemCount } = useCart();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -75,6 +75,11 @@ export default function Navbar() {
               aria-label="Shopping Cart"
             >
               <ShoppingCart className="w-5 h-5" />
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
             </button>
             {!loading && user ? (
               <UserDropdown />
@@ -93,10 +98,15 @@ export default function Navbar() {
           <div className="md:hidden flex items-center space-x-2">
             <button 
               onClick={openCart}
-              className="p-2 text-gray-700 hover:text-primary-500 transition-colors duration-300 rounded-lg hover:bg-gray-100"
+              className="relative p-2 text-gray-700 hover:text-primary-500 transition-colors duration-300 rounded-lg hover:bg-gray-100"
               aria-label="Shopping Cart"
             >
               <ShoppingCart className="w-5 h-5" />
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
             </button>
             <button 
               onClick={toggleMobileMenu}
