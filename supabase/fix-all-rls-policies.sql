@@ -5,19 +5,44 @@
 -- PART 1: Fix Table RLS Policies
 -- ============================================
 
--- Drop ALL existing policies for products, categories and brands
+-- Drop ALL existing policies for profiles, products, categories and brands
+DROP POLICY IF EXISTS "Users can view their own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can update their own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Admins can view all profiles" ON public.profiles;
+DROP POLICY IF EXISTS "Admins can update user roles" ON public.profiles;
+DROP POLICY IF EXISTS "Authenticated users can view all profiles" ON public.profiles;
 DROP POLICY IF EXISTS "Admins can view all products" ON public.products;
 DROP POLICY IF EXISTS "Admins can insert products" ON public.products;
 DROP POLICY IF EXISTS "Admins can update products" ON public.products;
 DROP POLICY IF EXISTS "Admins can delete products" ON public.products;
+DROP POLICY IF EXISTS "Authenticated users can view all products" ON public.products;
+DROP POLICY IF EXISTS "Authenticated users can insert products" ON public.products;
+DROP POLICY IF EXISTS "Authenticated users can update products" ON public.products;
+DROP POLICY IF EXISTS "Authenticated users can delete products" ON public.products;
 DROP POLICY IF EXISTS "Admins can manage categories" ON public.categories;
 DROP POLICY IF EXISTS "Admins can insert categories" ON public.categories;
 DROP POLICY IF EXISTS "Admins can update categories" ON public.categories;
 DROP POLICY IF EXISTS "Admins can delete categories" ON public.categories;
+DROP POLICY IF EXISTS "Authenticated users can insert categories" ON public.categories;
+DROP POLICY IF EXISTS "Authenticated users can update categories" ON public.categories;
+DROP POLICY IF EXISTS "Authenticated users can delete categories" ON public.categories;
 DROP POLICY IF EXISTS "Admins can manage brands" ON public.brands;
 DROP POLICY IF EXISTS "Admins can insert brands" ON public.brands;
 DROP POLICY IF EXISTS "Admins can update brands" ON public.brands;
 DROP POLICY IF EXISTS "Admins can delete brands" ON public.brands;
+DROP POLICY IF EXISTS "Authenticated users can insert brands" ON public.brands;
+DROP POLICY IF EXISTS "Authenticated users can update brands" ON public.brands;
+DROP POLICY IF EXISTS "Authenticated users can delete brands" ON public.brands;
+
+-- Recreate profiles policies - simple and non-recursive
+CREATE POLICY "Users can view their own profile" ON public.profiles
+    FOR SELECT USING (auth.uid() = id);
+
+CREATE POLICY "Users can update their own profile" ON public.profiles
+    FOR UPDATE USING (auth.uid() = id);
+
+CREATE POLICY "Authenticated users can view all profiles" ON public.profiles
+    FOR SELECT USING (auth.role() = 'authenticated');
 
 -- Recreate products policies - allow authenticated users (admin check done at app level)
 CREATE POLICY "Authenticated users can view all products" ON public.products

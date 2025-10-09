@@ -1,44 +1,81 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Users, UserPlus, Search, Filter, MoreHorizontal } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+
+interface User {
+  id: string;
+  email: string;
+  full_name: string | null;
+  role: string;
+  created_at: string;
+  updated_at: string;
+  address: string | null;
+  city: string | null;
+  phone: string | null;
+  postal_code: string | null;
+}
 
 export default function UsersPage() {
-  // Mock user data
-  const users = [
-    {
-      id: 1,
-      name: 'John Smith',
-      email: 'john.smith@example.com',
-      role: 'Customer',
-      status: 'Active',
-      joinDate: '2024-01-15',
-      lastLogin: '2024-01-20',
-      orders: 3,
-      totalSpent: 12450,
-    },
-    {
-      id: 2,
-      name: 'Sarah Johnson',
-      email: 'sarah.johnson@example.com',
-      role: 'Customer',
-      status: 'Active',
-      joinDate: '2024-01-10',
-      lastLogin: '2024-01-19',
-      orders: 1,
-      totalSpent: 4299,
-    },
-    {
-      id: 3,
-      name: 'Mike Wilson',
-      email: 'mike.wilson@example.com',
-      role: 'Customer',
-      status: 'Inactive',
-      joinDate: '2023-12-20',
-      lastLogin: '2024-01-05',
-      orders: 5,
-      totalSpent: 18750,
-    },
-  ];
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({
+    total: 0,
+    active: 0,
+    newThisMonth: 0,
+    premium: 0,
+  });
+  const supabase = createClient();
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      
+      // Fetch all users from profiles table
+      const { data: profilesData, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching users:', error);
+        return;
+      }
+
+      setUsers(profilesData || []);
+
+      // Calculate stats
+      const now = new Date();
+      const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      
+      const total = profilesData?.length || 0;
+      const newThisMonth = profilesData?.filter(user => 
+        new Date(user.created_at) >= firstDayOfMonth
+      ).length || 0;
+      
+      // Count users who have updated their profile recently as active
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      const active = profilesData?.filter(user => 
+        new Date(user.updated_at) >= thirtyDaysAgo
+      ).length || 0;
+
+      const premium = profilesData?.filter(user => 
+        user.role === 'admin' || user.role === 'super_admin'
+      ).length || 0;
+
+      setStats({ total, active, newThisMonth, premium });
+    } catch (error) {
+      console.error('Error in fetchUsers:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-ZA', {
@@ -73,7 +110,7 @@ export default function UsersPage() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">Total Users</p>
-              <p className="text-2xl font-bold text-gray-900">1,247</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
             </div>
           </div>
         </div>
@@ -85,7 +122,7 @@ export default function UsersPage() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">Active Users</p>
-              <p className="text-2xl font-bold text-gray-900">1,089</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.active}</p>
             </div>
           </div>
         </div>
@@ -97,7 +134,7 @@ export default function UsersPage() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">New This Month</p>
-              <p className="text-2xl font-bold text-gray-900">158</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.newThisMonth}</p>
             </div>
           </div>
         </div>
@@ -109,7 +146,7 @@ export default function UsersPage() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">Premium Users</p>
-              <p className="text-2xl font-bold text-gray-900">423</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.premium}</p>
             </div>
           </div>
         </div>
@@ -171,49 +208,61 @@ export default function UsersPage() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {users.map((user) => (
-                <tr key={user.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-accent-purple rounded-full flex items-center justify-center">
-                        <span className="text-white font-semibold text-sm">
-                          {user.name.charAt(0)}
-                        </span>
-                      </div>
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                        <div className="text-sm text-gray-500">{user.email}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {user.role}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      user.status === 'Active'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {user.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {user.orders}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {formatCurrency(user.totalSpent)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(user.lastLogin).toLocaleDateString()}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button className="text-gray-400 hover:text-gray-600 p-1">
-                      <MoreHorizontal className="w-4 h-4" />
-                    </button>
+              {loading ? (
+                <tr>
+                  <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
+                    Loading users...
                   </td>
                 </tr>
-              ))}
+              ) : users.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
+                    No users found
+                  </td>
+                </tr>
+              ) : (
+                users.map((user) => (
+                  <tr key={user.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-accent-purple rounded-full flex items-center justify-center">
+                          <span className="text-white font-semibold text-sm">
+                            {(user.full_name || user.email).charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                        <div className="ml-4">
+                          <div className="text-sm font-medium text-gray-900">
+                            {user.full_name || 'No name'}
+                          </div>
+                          <div className="text-sm text-gray-500">{user.email}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 capitalize">
+                      {user.role}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      -
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      -
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {new Date(user.created_at).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button className="text-gray-400 hover:text-gray-600 p-1">
+                        <MoreHorizontal className="w-4 h-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
