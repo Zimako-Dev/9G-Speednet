@@ -43,6 +43,7 @@ export default function NewProductPage() {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
+  const [uploadingImages, setUploadingImages] = useState<boolean[]>([]);
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -75,6 +76,42 @@ export default function NewProductPage() {
     control: form.control,
     name: 'images' as any,
   });
+
+  const handleImageUpload = async (file: File, index: number) => {
+    try {
+      // Set uploading state
+      setUploadingImages(prev => {
+        const newState = [...prev];
+        newState[index] = true;
+        return newState;
+      });
+
+      // Generate a temporary product ID for the upload
+      const tempProductId = `temp-${Date.now()}`;
+      
+      // Upload the image
+      const imageUrl = await ProductService.uploadProductImage(file, tempProductId);
+      
+      if (imageUrl) {
+        // Update the form with the uploaded image URL
+        form.setValue(`images.${index}`, imageUrl);
+        setMessage({ type: 'success', text: 'Image uploaded successfully!' });
+        setTimeout(() => setMessage(null), 3000);
+      } else {
+        setMessage({ type: 'error', text: 'Failed to upload image' });
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setMessage({ type: 'error', text: 'Failed to upload image' });
+    } finally {
+      // Clear uploading state
+      setUploadingImages(prev => {
+        const newState = [...prev];
+        newState[index] = false;
+        return newState;
+      });
+    }
+  };
 
   const onSubmit = async (data: ProductFormData) => {
     setIsSubmitting(true);
@@ -396,23 +433,64 @@ export default function NewProductPage() {
             </button>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             {imageFields.map((field, index) => (
-              <div key={field.id} className="flex items-center space-x-3">
-                <input
-                  {...form.register(`images.${index}`)}
-                  type="url"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="https://example.com/image.jpg"
-                />
-                {imageFields.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
+              <div key={field.id} className="space-y-2">
+                <div className="flex items-center space-x-3">
+                  <input
+                    {...form.register(`images.${index}`)}
+                    type="url"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="https://example.com/image.jpg or upload below"
+                    disabled={uploadingImages[index]}
+                  />
+                  {imageFields.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeImage(index)}
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      disabled={uploadingImages[index]}
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+                
+                {/* File Upload Button */}
+                <div className="flex items-center space-x-2">
+                  <label className="inline-flex items-center px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+                    <Upload className="w-4 h-4 mr-2" />
+                    {uploadingImages[index] ? 'Uploading...' : 'Upload Image'}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          handleImageUpload(file, index);
+                        }
+                      }}
+                      disabled={uploadingImages[index]}
+                    />
+                  </label>
+                  {uploadingImages[index] && (
+                    <span className="text-sm text-gray-500">Uploading...</span>
+                  )}
+                </div>
+                
+                {/* Image Preview */}
+                {form.watch(`images.${index}`) && !uploadingImages[index] && (
+                  <div className="relative w-32 h-32 border border-gray-200 rounded-lg overflow-hidden">
+                    <img
+                      src={form.watch(`images.${index}`)}
+                      alt={`Preview ${index + 1}`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=Invalid+Image';
+                      }}
+                    />
+                  </div>
                 )}
               </div>
             ))}

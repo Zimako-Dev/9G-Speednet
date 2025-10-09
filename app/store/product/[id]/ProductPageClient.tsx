@@ -4,23 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Star, ShoppingCart, Heart, Shield, Truck, Headphones, Check } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-
-interface Product {
-  id: number;
-  name: string;
-  brand: string;
-  price: number;
-  originalPrice?: number;
-  rating: number;
-  reviews: number;
-  images: string[];
-  category: string;
-  features: string[];
-  specifications: { [key: string]: string };
-  description: string;
-  badge?: string;
-  inStock: boolean;
-}
+import { Product } from '@/types/admin';
 
 interface ProductPageClientProps {
   product: Product;
@@ -57,7 +41,7 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
     // Add items one by one to respect the quantity
     for (let i = 0; i < quantity; i++) {
       addItem({
-        id: product.id,
+        id: typeof product.id === 'string' ? parseInt(product.id) : product.id,
         name: product.name,
         brand: product.brand,
         price: product.price,

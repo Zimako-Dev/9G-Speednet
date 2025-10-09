@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ArrowLeft, Plus, X, AlertCircle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Plus, X, Upload, AlertCircle, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { ProductService } from '@/lib/productService';
 import { Product, UpdateProductData } from '@/types/admin';
@@ -49,6 +49,7 @@ export default function EditProductClient({ productId }: EditProductClientProps)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
+  const [uploadingImages, setUploadingImages] = useState<boolean[]>([]);
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -73,6 +74,39 @@ export default function EditProductClient({ productId }: EditProductClientProps)
     control: form.control,
     name: 'images' as any,
   });
+
+  const handleImageUpload = async (file: File, index: number) => {
+    try {
+      // Set uploading state
+      setUploadingImages(prev => {
+        const newState = [...prev];
+        newState[index] = true;
+        return newState;
+      });
+
+      // Use the actual product ID for upload
+      const imageUrl = await ProductService.uploadProductImage(file, productId);
+      
+      if (imageUrl) {
+        // Update the form with the uploaded image URL
+        form.setValue(`images.${index}`, imageUrl);
+        setMessage({ type: 'success', text: 'Image uploaded successfully!' });
+        setTimeout(() => setMessage(null), 3000);
+      } else {
+        setMessage({ type: 'error', text: 'Failed to upload image' });
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setMessage({ type: 'error', text: 'Failed to upload image' });
+    } finally {
+      // Clear uploading state
+      setUploadingImages(prev => {
+        const newState = [...prev];
+        newState[index] = false;
+        return newState;
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {

@@ -120,28 +120,42 @@ CREATE POLICY "Admins can view all order items" ON public.order_items
         )
     );
 
--- Categories policies
+-- Categories policies (public read access)
 CREATE POLICY "Anyone can view active categories" ON public.categories
     FOR SELECT USING (is_active = true);
 
-CREATE POLICY "Admins can manage categories" ON public.categories
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM public.profiles 
-            WHERE id = auth.uid() AND role IN ('admin', 'super_admin')
-        )
+CREATE POLICY "Admins can insert categories" ON public.categories
+    FOR INSERT WITH CHECK (
+        (SELECT role FROM public.profiles WHERE id = auth.uid()) IN ('admin', 'super_admin')
     );
 
--- Brands policies
+CREATE POLICY "Admins can update categories" ON public.categories
+    FOR UPDATE USING (
+        (SELECT role FROM public.profiles WHERE id = auth.uid()) IN ('admin', 'super_admin')
+    );
+
+CREATE POLICY "Admins can delete categories" ON public.categories
+    FOR DELETE USING (
+        (SELECT role FROM public.profiles WHERE id = auth.uid()) IN ('admin', 'super_admin')
+    );
+
+-- Brands policies (public read access)
 CREATE POLICY "Anyone can view active brands" ON public.brands
     FOR SELECT USING (is_active = true);
 
-CREATE POLICY "Admins can manage brands" ON public.brands
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM public.profiles 
-            WHERE id = auth.uid() AND role IN ('admin', 'super_admin')
-        )
+CREATE POLICY "Admins can insert brands" ON public.brands
+    FOR INSERT WITH CHECK (
+        (SELECT role FROM public.profiles WHERE id = auth.uid()) IN ('admin', 'super_admin')
+    );
+
+CREATE POLICY "Admins can update brands" ON public.brands
+    FOR UPDATE USING (
+        (SELECT role FROM public.profiles WHERE id = auth.uid()) IN ('admin', 'super_admin')
+    );
+
+CREATE POLICY "Admins can delete brands" ON public.brands
+    FOR DELETE USING (
+        (SELECT role FROM public.profiles WHERE id = auth.uid()) IN ('admin', 'super_admin')
     );
 
 -- Cart items policies
