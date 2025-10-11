@@ -26,7 +26,7 @@ export default function Footer() {
               Lightning-fast speeds, unmatched reliability, and exceptional support.
             </p>
             <div className="flex space-x-2">
-              <a href="#" className="bg-gray-800 hover:bg-primary-500 p-2 rounded-full transition-all duration-300 hover:scale-110">
+              <a href="https://www.facebook.com/profile.php?id=61581579597003" target="_blank" rel="noopener noreferrer" className="bg-gray-800 hover:bg-primary-500 p-2 rounded-full transition-all duration-300 hover:scale-110">
                 <Facebook className="w-3 h-3" />
               </a>
               <a href="#" className="bg-gray-800 hover:bg-primary-500 p-2 rounded-full transition-all duration-300 hover:scale-110">
