@@ -100,23 +100,77 @@ export default function Footer() {
         </div>
       </div>
 
+      <div className="border-t border-gray-800 bg-gray-950">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="lg:col-span-2">
+              <h4 className="text-base font-bold mb-3">Policies</h4>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Learn about how we handle your data, uphold service standards, and ensure a
+                secure online experience for every customer.
+              </p>
+            </div>
+            <div>
+              <h5 className="text-sm font-semibold mb-2">Legal</h5>
+              <ul className="space-y-1.5 text-xs">
+                <li>
+                  <Link href="/policies/privacy" className="text-gray-300 hover:text-primary-500 transition-colors duration-300">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/policies/terms" className="text-gray-300 hover:text-primary-500 transition-colors duration-300">
+                    Terms of Service
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/policies/cookies" className="text-gray-300 hover:text-primary-500 transition-colors duration-300">
+                    Cookie Policy
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-sm font-semibold mb-2">Compliance</h5>
+              <ul className="space-y-1.5 text-xs">
+                <li>
+                  <Link href="/policies/acceptable-use" className="text-gray-300 hover:text-primary-500 transition-colors duration-300">
+                    Acceptable Use
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/policies/service-level" className="text-gray-300 hover:text-primary-500 transition-colors duration-300">
+                    Service Level
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/policies/data-protection" className="text-gray-300 hover:text-primary-500 transition-colors duration-300">
+                    Data Protection
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-6 py-3">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-xs mb-2 md:mb-0">
-              © {currentYear} 9G Speednet. All rights reserved.
+              &copy; {currentYear} 9G Speednet. All rights reserved.
             </div>
             <div className="flex space-x-4 text-xs">
-              <a href="#" className="text-gray-400 hover:text-primary-500 transition-colors duration-300">
+              <Link href="/policies/privacy" className="text-gray-400 hover:text-primary-500 transition-colors duration-300">
                 Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-500 transition-colors duration-300">
+              </Link>
+              <Link href="/policies/terms" className="text-gray-400 hover:text-primary-500 transition-colors duration-300">
                 Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-500 transition-colors duration-300">
+              </Link>
+              <Link href="/policies/cookies" className="text-gray-400 hover:text-primary-500 transition-colors duration-300">
                 Cookie Policy
-              </a>
+              </Link>
             </div>
           </div>
         </div>
